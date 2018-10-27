@@ -7,8 +7,7 @@
 
 int main()
 {
-	BigInteger nr1 = BigInteger("12334");
+	BigInteger nr1 = BigInteger("10");
 
-	std::cout << "Hello World! I have changed this line changed\n";
-	std::cout << nr1.toString();
+		std::cout << nr1.toString();
 }

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "BigInteger.h"
 
 
@@ -42,3 +42,4 @@ char* BigInteger::toString()
 {
 	return this->numberSequence;
 }
+
