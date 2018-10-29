@@ -1,5 +1,13 @@
 #Rebeca_Oprea
 
+using namespace std;
+
+typedef int64_t a;
+typedef long long ll;
+typedef pair<a, a> a;
+typedef pair<a, int> ai;
+typedef pair<int, int> ii;
+
 class BigInteger
 {
 private:
@@ -165,4 +173,32 @@ void operator *= (BigInteger &a, BigInt b) {
 
 void operator *= (BigInteger &a, int b) {
 	a = a * b;
+}
+
+
+BigInteger operator / (BigInteger a, BigInteger b) 
+{
+	Set(a);
+	Set(b);
+	if (b == Integer(0)) return Integer("-1");
+	BigInteger lol, ent;
+
+	for (int i = a.size() - 1; i >= 0; i--)
+	{
+		cur.insert(cur.begin(), a[i]);
+		int x = 0, L = 0, R = baza;
+		while (L <= R) {
+			int mid = (L + R) >> 1;
+			if (b*Integer(mij) > ent) {
+				x = mij;
+				R = mij - 1;
+			}
+			else
+				L = mij + 1;
+		}
+		ent = ent - Integer(x - 1)*b;
+		ans.insert(ans.begin(), x - 1);
+	}
+	Set(lol);
+	return lol;
 }
