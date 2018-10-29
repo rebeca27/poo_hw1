@@ -203,9 +203,9 @@ BigInteger operator / (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInt operator / (BigInt t, int b) {
+BigInteger operator / (BigInteger t, int b) {
 	Set(t);
-	BigInt lol;
+	BigInteger lol;
 	t ent = 0ll;
 	for(i = t.size() - 1; i >= 0; i--)
 	{
@@ -217,21 +217,21 @@ BigInt operator / (BigInt t, int b) {
 	return lol;
 }
 
-void operator /= (BigInt &a, BigInt b) {
+void operator /= (BigInteger &a, BigInteger b) {
 	a = a / b;
 }
 
-void operator /= (BigInt &a, int b) {
+void operator /= (BigInteger &a, int b) {
 	a = a / b;
 }
 
 
-BigInt operator % (BigInt a, BigInt b) 
+BigInteger operator % (BigInteger a, BigInteger b)
 {
 	Set(a);
 	Set(b);
 	if (b == Integer(0)) return Integer("-1");
-	BigInt lol;
+	BigInteger lol;
 	for(i = a.size() - 1; i >= 0; i--)
 	{
 		lol.insert(lol.begin(), a[i]);
@@ -249,4 +249,22 @@ BigInt operator % (BigInt a, BigInt b)
 	}
 	Set(lol);
 	return lol;
+}
+
+int operator % (BigInteger a, int b)
+{
+	Set(a);
+	if (b == 0) return -1;
+	int gucci = 0;
+	for (i = a.size() - 1; i >= 0; i--)
+		gucci = (gucci*(base%b) + a[i] % b) % b;
+	return gucci;
+}
+
+void operator %= (BigInteger &a, BigInteger b) {
+	a = a % b;
+}
+
+void operator %= (BigInteger &a, int b) {
+	a = a % Integer(b);
 }
