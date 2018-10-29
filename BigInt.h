@@ -45,7 +45,10 @@ BigInteger Integer(string s)
 {
 	BigInteger lol;
 	if (s[0] == '-') return lol;
-	if (s.size() == 0) { lol.push_back(0); return lol; }
+	if (s.size() == 0) 
+	{ lol.push_back(0); 
+	return lol; 
+	}
 	while (s.size() % 9 != 0) s = '0' + s;
 	for (int i = 0; i < s.size(); i += 9) {
 		int v = 0;
@@ -181,24 +184,29 @@ BigInteger operator + (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInteger operator + (BigInteger a, int b) {
+BigInteger operator + (BigInteger a, int b)
+{
 	return a + Integer(b);
 }
 
-BigInteger operator ++ (BigInteger &a) { 
+BigInteger operator ++ (BigInteger &a) 
+{ 
 	a = a + 1;
 	return a;
 }
 
-void operator += (BigInteger &a, BigInteger b) {
+void operator += (BigInteger &a, BigInteger b)
+{
 	a = a + b;
 }
 
-void operator += (BigInteger &a, int b) {
+void operator += (BigInteger &a, int b) 
+{
 	a = a + b;
 }
 
-BigInteger operator - (BigInteger a, BigInteger b) {
+BigInteger operator - (BigInteger a, BigInteger b) 
+{
 	Set(a);
 	Set(b);
 	BigInteger lol;
@@ -214,19 +222,23 @@ BigInteger operator - (BigInteger a, BigInteger b) {
 	return lol;
 }
 
-BigInteger operator - (BigInteger a, int b) {
+BigInteger operator - (BigInteger a, int b)
+{
 	return a - Integer(b);
 }
 
-void operator -- (BigInteger &a) { 
+void operator -- (BigInteger &a) 
+{ 
 	a = a - 1;
 }
 
-void operator -= (BigInteger &a, BigInteger b) {
+void operator -= (BigInteger &a, BigInteger b) 
+{
 	a = a + b;
 }
 
-void operator -= (BigInteger &a, int b) {
+void operator -= (BigInteger &a, int b) 
+{
 	a = a - b;
 }
 
@@ -240,7 +252,8 @@ BigInteger operator * (BigInteger t, BigInteger b)
 	for (i = 0; i <= t.size() - 1; i++)
 	{
 		a carry = 0ll;
-		for (int j = 0; j < b.size() || rest > 0; j++) {
+		for (int j = 0; j < b.size() || rest > 0; j++)
+		{
 			a s = lol[i + j] + rest + (a)t[i] * (j < b.size() ? (a)b[j] : 0ll);
 			lol[i + j] = s % baza;
 			rest = s / baza;
@@ -250,15 +263,18 @@ BigInteger operator * (BigInteger t, BigInteger b)
 	return lol;
 }
 
-BigInteger operator * (BigInteger a, int b) {
+BigInteger operator * (BigInteger a, int b)
+{
 	return a * Integer(b);
 }
 
-void operator *= (BigInteger &a, BigInt b) {
+void operator *= (BigInteger &a, BigInt b) 
+{
 	a = a * b;
 }
 
-void operator *= (BigInteger &a, int b) {
+void operator *= (BigInteger &a, int b) 
+{
 	a = a * b;
 }
 
@@ -276,7 +292,8 @@ BigInteger operator / (BigInteger a, BigInteger b)
 		int x = 0, L = 0, R = baza;
 		while (L <= R) {
 			int mid = (L + R) >> 1;
-			if (b*Integer(mij) > ent) {
+			if (b*Integer(mij) > ent)
+			{
 				x = mij;
 				R = mij - 1;
 			}
@@ -290,7 +307,8 @@ BigInteger operator / (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInteger operator / (BigInteger t, int b) {
+BigInteger operator / (BigInteger t, int b) 
+{
 	Set(t);
 	BigInteger lol;
 	t ent = 0ll;
