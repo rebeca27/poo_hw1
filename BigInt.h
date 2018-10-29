@@ -28,13 +28,80 @@ public:
 
 const int baza = 1e9;  //Format: 1,000,000,000.00
 
-
 BigInteger Integer(char a[])
 {
 	string r = "";
-	for(i, 0, strlen(a) - 1) 
+	for(i = 0; i <= strlen(a) - 1; i++) 
 		r = r + a[i];
 	return Integer(r);
+}
+
+void Set(BigInteger &bi) 
+{
+	while (bi.size() > 1 && bi.back() == 0) bi.pop_back();
+}
+
+BigInteger Integer(string s) 
+{
+	BigInteger lol;
+	if (s[0] == '-') return lol;
+	if (s.size() == 0) { lol.push_back(0); return lol; }
+	while (s.size() % 9 != 0) s = '0' + s;
+	for (int i = 0; i < s.size(); i += 9) {
+		int v = 0;
+		for (int j = i; j < i + 9; j++) v = v * 10 + (s[j] - '0');
+		lol.insert(lol.begin(), v);
+	}
+	Set(lol);
+	return lol;
+}
+
+BigInteger Integer(char ch[]) 
+{
+	string s = "";
+	for(i = 0; i <= strlen(ch) - 1; s = s + ch[i]; i++)
+	return Integer(s);
+}
+
+BigInteger Integer(b x)
+{
+	string r = "";
+	while (x > 0)
+		r = char(x % 10 + '0') + r, x /= 10;
+	return Integer(r);
+}
+
+BigInteger Integer(int x)
+{
+	return Integer((b)x);
+}
+
+void operator >> (istream &in, BigInteger &a)
+{
+	string s;
+	getline(cin, s);
+	a = Integer(s);
+}
+
+void operator << (ostream &out, BigInteger a)
+{
+	Set(a);
+	printf("%d", (a.size() == 0) ? 0 : a.back());
+	for(i = a.size() - 2; i >= 0; i--)
+		printf("%09d", a[i]); 
+	printf("\n");
+}
+
+bool operator < (BigInteger x, BigInteger y)
+{
+	Set(x);
+	Set(y);
+	if (x.size() != y.size())
+		return (x.size() < y.size());
+	for (int i = x.size() - 1, i >= 0; i--)
+		if (x[i] != y[i])
+			return (x[i] < y[i]);
+	return false;
 }
 
 BigInteger maxim(BigInteger a, BigInteger b)
@@ -47,31 +114,6 @@ BigInteger minim(BigInteger a, BigInteger b)
 {
 	if (a < b) return a;
 	return b;
-}
-
-
-BigInteger Integer(b x)
-{
-	string r = "";
-	while (x > 0)
-		r = char(x % 10 + '0') + r, x /= 10;
-	return Integer(r);
-}
-
-BigInteger Integer(int x) {
-	return Integer((b)x);
-}
-
-bool operator < (BigInteger x, BigInteger y) 
-{
-	Set(x);
-	Set(y);
-	if (x.size() != y.size()) 
-		return (x.size() < y.size());
-	for(int i = x.size() - 1, i >= 0; i--)
-		if (x[i] != y[i]) 
-			return (x[i] < y[i]);
-	return false;
 }
 
 BigInteger operator + (BigInteger a, BigInteger b)
@@ -255,10 +297,10 @@ int operator % (BigInteger a, int b)
 {
 	Set(a);
 	if (b == 0) return -1;
-	int gucci = 0;
+	int Gucci = 0;
 	for (i = a.size() - 1; i >= 0; i--)
-		gucci = (gucci*(base%b) + a[i] % b) % b;
-	return gucci;
+		Gucci = (Gucci*(base%b) + a[i] % b) % b;
+	return Gucci;
 }
 
 void operator %= (BigInteger &a, BigInteger b) {
@@ -268,3 +310,4 @@ void operator %= (BigInteger &a, BigInteger b) {
 void operator %= (BigInteger &a, int b) {
 	a = a % Integer(b);
 }
+
