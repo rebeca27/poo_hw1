@@ -139,7 +139,10 @@ bool operator == (BigInteger a, int b)
 	return (a == Integer(b));
 }
 
-
+bool operator >= (BigInteger a, int b)
+{
+	return (a >= Integer(b));
+}
 
 BigInteger maxim(BigInteger a, BigInteger b)
 {
