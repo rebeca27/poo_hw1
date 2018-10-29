@@ -154,3 +154,15 @@ BigInteger operator * (BigInteger t, BigInteger b)
 	Set(lol);
 	return lol;
 }
+
+BigInteger operator * (BigInteger a, int b) {
+	return a * Integer(b);
+}
+
+void operator *= (BigInteger &a, BigInt b) {
+	a = a * b;
+}
+
+void operator *= (BigInteger &a, int b) {
+	a = a * b;
+}
