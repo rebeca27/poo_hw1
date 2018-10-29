@@ -207,8 +207,7 @@ BigInt operator / (BigInt t, int b) {
 	Set(t);
 	BigInt lol;
 	t ent = 0ll;
-	FORD(i, t.size() - 1, 0) 
-	for()
+	for(i = t.size() - 1; i >= 0; i--)
 	{
 		ent = (ent*(a)baza + (a)t[i]);
 		lol.insert(lol.begin(), ent / b);
@@ -224,4 +223,30 @@ void operator /= (BigInt &a, BigInt b) {
 
 void operator /= (BigInt &a, int b) {
 	a = a / b;
+}
+
+
+BigInt operator % (BigInt a, BigInt b) 
+{
+	Set(a);
+	Set(b);
+	if (b == Integer(0)) return Integer("-1");
+	BigInt lol;
+	for(i = a.size() - 1; i >= 0; i--)
+	{
+		lol.insert(lol.begin(), a[i]);
+		int x = 0, L = 0, R = baza;
+		while (L <= R) {
+			int mij = (L + R) >> 1;
+			if (b*Integer(mij) > lol) {
+				x = mij;
+				R = mij - 1;
+			}
+			else
+				L = mij + 1;
+		}
+		lol = lol - Integer(x - 1)*b;
+	}
+	Set(lol);
+	return lol;
 }
