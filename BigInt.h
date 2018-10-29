@@ -119,6 +119,18 @@ bool operator <= (BigInteger a, BigInteger b)
 	return (a < b || a == b);
 }
 
+bool operator >= (BigInteger a, BigInteger b)
+{
+	return (b < a || b == a);
+}
+
+bool operator < (BigInteger a, int b) 
+{
+	return (a < Integer(b));
+}
+
+
+
 BigInteger maxim(BigInteger a, BigInteger b)
 {
 	if (a > b) return a;
