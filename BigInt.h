@@ -217,3 +217,11 @@ BigInt operator / (BigInt t, int b) {
 	Set(lol);
 	return lol;
 }
+
+void operator /= (BigInt &a, BigInt b) {
+	a = a / b;
+}
+
+void operator /= (BigInt &a, int b) {
+	a = a / b;
+}
