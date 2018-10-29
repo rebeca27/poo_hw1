@@ -16,6 +16,11 @@ public:
 
 };
 
+BigInteger Integer(char a[]) {
+	string r = "";
+	FOR(i, 0, strlen(a) - 1) r = r + a[i];
+	return Integer(r);
+}
 
 
 
