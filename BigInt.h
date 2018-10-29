@@ -136,4 +136,21 @@ void operator -= (BigInteger &a, int b) {
 }
 
 
-
+BigInteger operator * (BigInteger t, BigInteger b)
+{
+	Set(t);
+	Set(b);
+	BigInteger lol;
+	lol.assign(t.size() + b.size(), 0);
+	for (i = 0; i <= t.size() - 1; i++)
+	{
+		a carry = 0ll;
+		for (int j = 0; j < b.size() || rest > 0; j++) {
+			a s = lol[i + j] + rest + (a)t[i] * (j < b.size() ? (a)b[j] : 0ll);
+			lol[i + j] = s % baza;
+			rest = s / baza;
+		}
+	}
+	Set(lol);
+	return lol;
+}
