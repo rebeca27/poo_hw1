@@ -82,3 +82,20 @@ BigInteger operator + (BigInteger a, BigInteger b)
 	Set(lol);
 	return lol;
 }
+
+BigInteger operator + (BigInteger a, int b) {
+	return a + Integer(b);
+}
+
+BigInteger operator ++ (BigInteger &a) { 
+	a = a + 1;
+	return a;
+}
+
+void operator += (BigInteger &a, BigInteger b) {
+	a = a + b;
+}
+
+void operator += (BigInteger &a, int b) {
+	a = a + b;
+}
