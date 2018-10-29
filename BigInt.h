@@ -21,14 +21,29 @@ public:
 BigInteger Integer(char a[])
 {
 	string r = "";
-	FOR(i, 0, strlen(a) - 1) r = r + a[i];
+	for(i, 0, strlen(a) - 1) 
+		r = r + a[i];
 	return Integer(r);
 }
+
+BigInteger maxim(BigInteger a, BigInteger b)
+{
+	if (a > b) return a;
+	return b;
+}
+
+BigInteger minim(BigInteger a, BigInteger b) 
+{
+	if (a < b) return a;
+	return b;
+}
+
 
 BigInteger Integer(b x)
 {
 	string r = "";
-	while (x > 0) r = char(x % 10 + '0') + r, x /= 10;
+	while (x > 0)
+		r = char(x % 10 + '0') + r, x /= 10;
 	return Integer(r);
 }
 
@@ -40,10 +55,30 @@ bool operator < (BigInteger x, BigInteger y)
 {
 	Set(x);
 	Set(y);
-	if (x.size() != y.size()) return (x.size() < y.size());
-	FORD(i, x.size() - 1, 0)
-		if (x[i] != y[i]) return (x[i] < y[i]);
+	if (x.size() != y.size()) 
+		return (x.size() < y.size());
+	for(int i = x.size() - 1, i >= 0; i--)
+		if (x[i] != y[i]) 
+			return (x[i] < y[i]);
 	return false;
 }
 
-
+BigInteger operator + (BigInteger a, BigInteger b)
+{
+	Set(a);
+	Set(b);
+	BigInt lol;
+	int rest = 0;
+	int j = max(a.size(), b.size());
+ 	for(int i = 0; i <= j - 1; i++) 
+	{
+		if (i < a.size()) rest += a[i];
+		if (i < b.size()) rest += b[i];
+		lol.pb(rest%base);
+		rest /= base;
+	}
+	if (rest) 
+		bas.pb(rest);
+	Set(lol);
+	return lol;
+}
