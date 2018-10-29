@@ -32,7 +32,6 @@ int BigInteger::getBase()
 	return this->base;
 }
 
-
 char BigInteger::getSign()
 {
 	return this->isUnsigned ? '+' : '-';
@@ -42,4 +41,3 @@ char* BigInteger::toString()
 {
 	return this->numberSequence;
 }
-
