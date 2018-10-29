@@ -18,6 +18,9 @@ public:
 
 };
 
+const int baza = 1e9;  //Format: 1,000,000,000.00
+#define pb push_back
+
 BigInteger Integer(char a[])
 {
 	string r = "";
@@ -74,8 +77,8 @@ BigInteger operator + (BigInteger a, BigInteger b)
 	{
 		if (i < a.size()) rest += a[i];
 		if (i < b.size()) rest += b[i];
-		lol.pb(rest%base);
-		rest /= base;
+		lol.pb(rest%baza);
+		rest /= baza;
 	}
 	if (rest) 
 		bas.pb(rest);
@@ -99,3 +102,21 @@ void operator += (BigInteger &a, BigInteger b) {
 void operator += (BigInteger &a, int b) {
 	a = a + b;
 }
+
+BigInteger operator - (BigInteger a, BigInteger b) {
+	Set(a);
+	Set(b);
+	BigInteger lol;
+	int rest = 0; 
+	for(i = 0; i <= a.size() - 1; i++)
+	{
+		rest += a[i] - (i < b.size() ? b[i] : 0);
+		if (rest < 0)
+			lol.pb(rest + baza), rest = -1;
+		else lol.pb(rest), rest = 0;
+	}
+	Set(lol);
+	return lol;
+}
+
+
