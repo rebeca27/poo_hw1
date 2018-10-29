@@ -202,3 +202,18 @@ BigInteger operator / (BigInteger a, BigInteger b)
 	Set(lol);
 	return lol;
 }
+
+BigInt operator / (BigInt t, int b) {
+	Set(t);
+	BigInt lol;
+	t ent = 0ll;
+	FORD(i, t.size() - 1, 0) 
+	for()
+	{
+		ent = (ent*(a)baza + (a)t[i]);
+		lol.insert(lol.begin(), ent / b);
+		ent %= b;
+	}
+	Set(lol);
+	return lol;
+}
