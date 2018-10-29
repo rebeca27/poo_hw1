@@ -104,6 +104,10 @@ bool operator < (BigInteger x, BigInteger y)
 	return false;
 }
 
+bool operator > (BigInt a, BigInt b) {
+	return (b < a);
+}
+
 BigInteger maxim(BigInteger a, BigInteger b)
 {
 	if (a > b) return a;
