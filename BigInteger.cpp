@@ -215,6 +215,7 @@ BigInteger::BigInteger(const char *st) {
 	}
 }
 
+
 BigInteger :: operator ++()
 {
 	count = count + 1;
@@ -254,10 +255,10 @@ int BigInteger:: compare(const BigInteger &A, const BigInteger &B) {
 	}
 }
 
-BigInteger BigInteger:: operator ^ (const BigInt & base, int exp)
+BigInteger BigInteger:: operator ^ (const BigInteger & base, int exp)
 {
-	BigInt result;
-	if (exponent == 0)
+	BigInteger result;
+	if (exp == 0)
 	{
 		result.val.push_back(1);
 		return result;
@@ -439,7 +440,7 @@ BigInteger BigInteger :: operator * (BigInteger t, BigInteger b)
 	}
 	while (C.m[C.n - 1] == 0 && C.n > 1) C.n--;
 
-	if (mul.getNumber() == "0") // avoid (-0) problem
+	if (mul.getNumber() == "0") // evita problema (-0) 
 		mul.setSign(false);
 	return C;
 }
