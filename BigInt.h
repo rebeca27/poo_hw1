@@ -16,7 +16,7 @@ public:
 	BigInteger();
 	BigInteger(const char* numberSequence);
 	BigInteger(const char* numberSequence, int base);
-	virtual ~BigInteger();
+	virtual ~BigInteger();		//functia virtuala asigură că se apeleaza corect funcția pentru un obiect
 	int getBase();
 	char getSign();
 	char* toString();
