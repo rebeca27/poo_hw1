@@ -1,29 +1,28 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "BigInteger.h"
 
-BigInteger::BigInteger()
+BigInteger::BigInteger(int val, unsigned char base)
 {
-}
-
-BigInteger::BigInteger(const char* numberSequence)
-{
-	this->numberSequence = (char*)numberSequence;
+	this->val = 0;
 	this->base = 10;
-	this->isUnsigned = numberSequence[0] != '-';
 }
 
-BigInteger::BigInteger(const char* numberSequence, int base)
+BigInteger::BigInteger(long long int val , unsigned char)
 {
-	this->numberSequence = (char*)numberSequence;
-	this->base = base;
-	this->isUnsigned = numberSequence[0] == '-';
+	this->val = (long long int)val;
+	this->base = 10;
+}
+
+BigInteger::BigInteger(const std::string&,unsigned char)
+{
+	this->val = (const std::string&)val;
+	this->base = 10;
 }
 
 BigInteger::~BigInteger()
 {
-	delete this->numberSequence;
+	delete this->val;
 	delete &this->base;
-	delete &this->isUnsigned;
 }
 
 int BigInteger::getBase()
@@ -41,8 +40,6 @@ char* BigInteger::toString()
 	return this->numberSequence;
 }
 
-const int base = 10;
-
 BigInteger BigInteger :: Integer(char a[])                  //returneaza forma string a unui numar
 {
 	string r = "";
@@ -51,49 +48,19 @@ BigInteger BigInteger :: Integer(char a[])                  //returneaza forma s
 	return r;
 }
 
-void BigInteger :: Set(BigInteger &bi)             //se repeta structura while de cate ori vectorul are mai mult de 1 elem,
-				     //dar referinta ultimului element din vector este primul	
-	
-{
-	while (bi.size() > 1 && bi.back() == 0) bi.pop_back();
-}
-
-BigInteger BigInteger :: Integer(string s) 
-{
-	BigInteger lol;
-	if (s[0] == '-') return lol;				//daca nuamrul este negativ se intoarce
-	if (s.size() == 0) 
-	{ lol.push_back(0); 
-	return lol; 
+BigInteger::BigInteger(long long a) {
+	int n = 0;
+	for (int i = 0; i < 250; i++) m[i] = 0;
+	if (a >= 0) signplus = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
+	else {	
+		signplus = false;					//negativ altfel
+		a *= (-1);							//dacă numarul este negativ, se obtine inversul lui și se continua să se citeasca numărul
 	}
-	while (s.size() % 9 != 0) s = '0' + s;
-	for (int i = 0; i < s.size(); i += 9) {
-		int v = 0;
-		for (int j = i; j < i + 9; j++) v = v * 10 + (s[j] - '0');
-		lol.insert(lol.begin(), v);
+	while (a != 0) {						// se scrie numărul în matrice
+		m[n] = a % 10;
+		a /= 10;
+		n++;
 	}
-	Set(lol);
-	return lol;
-}
-
-BigInteger BigInteger :: Integer(char ch[]) 
-{
-	string s = "";
-	for(i = 0; i <= strlen(ch) - 1; s = s + ch[i]; i++)
-	return Integer(s);
-}
-
-BigInteger BigInteger :: Integer(b x)
-{
-	string r = "";
-	while (x > 0)
-		r = char(x % 10 + '0') + r, x /= 10;
-	return Integer(r);
-}
-
-BigInteger BigInteger :: Integer(int x)
-{
-	return Integer((b)x);
 }
 
 void BigInteger :: operator ++() 
@@ -106,21 +73,22 @@ void BigInteger :: operator --()
         count = count-1; 
     }
 
-void BigInteger :: operator >> (istream &in, BigInteger &a)
-{
-	string s;
-	getline(cin, s);
-	a = Integer(s);
+
+istream& operator >> (istream &in, BigInteger &A) {
+	char str[250];										// String pentru a scrie caracterele
+	stream >> str;										// Citiți caracterele
+	BigInteger B(str);
+	A = B;
+	return stream;
 }
 
-void BigInteger :: operator << (ostream &out, BigInteger a)
+ostream& operator<<(ostream &out, const BigInteger &A)
 {
-	Set(a);
-	printf("%d", (a.size() == 0) ? 0 : a.back());
-	for(i = a.size() - 2; i >= 0; i--)
-		std::cout << a[i]; 
-	std::cout << '\n';
+	if (!A.signplus) out << '-';							//Afisati semnul dacă numărul este negativ
+	for (int i = A.n - 1; i >= 0; i--) out << A.m[i];
+	return out;
 }
+
 
 bool BigInteger :: operator < (BigInteger x, BigInteger y)
 {
