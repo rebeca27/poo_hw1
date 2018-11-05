@@ -1,8 +1,14 @@
-﻿#include "pch.h"
+﻿//Поменять зн#include "pch.h"
+#include<vector>
+#include<string>
+#include<string.h>
+#include<stdexcept>
+#include<algorithm>
+#include<cstdlib>
 #include "BigInt.h"
 
 
-BigInteger:: BigInteger(int val = 0, unsigned char base = '10')
+BigInteger::BigInteger(int val, unsigned char base)
 {
 	int digit;
 	bool isNegative = false;
@@ -31,25 +37,38 @@ BigInteger:: BigInteger(int val = 0, unsigned char base = '10')
 	this->base = base;
 }
 
-BigInteger::BigInteger(long long int val, unsigned char base = '10')
+BigInteger::BigInteger(long long int val, unsigned char base)
 {
+
+	if (val >= 0) sign = '+';
+	else sign = '-';
+	if (val == 0) val.push_back('0');
+
+	val = std::abs(val);
+	while (val != 0)
+	{
+		int a = val % 10;
+		val.push_back(a + '0');
+		val /= 10;
+	}
+
 	this->val = (long long int)val;
 	this->base = 10;
 }
 
-BigInteger::BigInteger(const std::string& val, unsigned char base = '10')
+BigInteger::BigInteger(const std::string& val, unsigned char base)
 {
 	if (val[0] == '-') sign = '-';
 	else if (val[0] == '+')  sign = '+';
 	else
-	for (int i = 1; i < val.length; i++) {
-		if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
-			this->val[i] = val[i];
+		for (int i = 1; i < val.length; i++) {
+			if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
+				this->val[i] = val[i];
+			}
+			else {
+				throw std::runtime_error("valoarea introdusa nu este un numar valid");
+			}
 		}
-		else {
-			throw std::runtime_error("valoarea introdusa nu este un numar valid");
-		}
-	}
 
 	for (int i = val.length() - 1; i >= 1; i--)
 	{
@@ -89,9 +108,9 @@ BigInteger BigInteger::Integer(char a[])                  //returneaza forma str
 BigInteger::BigInteger(long long a) {
 	int n = 0;
 	for (int i = 0; i < 250; i++) m[i] = 0;
-	if (a >= 0) sign = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
+	if (a >= 0) is_unsigned = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
 	else {
-		sign = false;					//negativ altfel
+		is_unsigned = false;					//negativ altfel
 		a *= (-1);							//dacă numarul este negativ, se obtine inversul lui și se continua să se citeasca numărul
 	}
 	while (a != 0) {						// se scrie numărul în matrice
@@ -110,27 +129,27 @@ BigInteger::BigInteger(const char *st) {
 	for (int i = 0; i < l; i++) str[i] = st[i];     // se copiaza sirul pe o linie noua
 
 	if (str[0] == '-' || str[0] == '+') {         //daca se gaseste semn la inceput atunci daca e negativ  
-		if (str[0] == '-') sign = false;		//variabila semnului pozitiv va primi valoarea negativa
+		if (str[0] == '-') is_unsigned = false;		//variabila semnului pozitiv va primi valoarea negativa
 		else sign = true;				//altfel daca e pozitiv variabila semnului pozitiv va primi valoarea pozitiva
 		for (int i = 1; i < l; i++) {
 			str[i - 1] = str[i];
 		}
 		l--;
 	}
-	else sign = true;					// dacă semnul nu este specificat, numărul este pozitiv
+	else is_unsigned = true;					// dacă semnul nu este specificat, numărul este pozitiv
 	int u = 0;								 // numărul de zerouri de la începutul șirului de citire
 	for (int i = 0; i < l; i++) {			// se numara numărul de zerouri
 		if (str[i] == '0') u++;
 		else break;
 	}
 	if (u == l) {							// dacă linia are numai zerouri, se scrie numărul 0
-		sign = true;
+		is_unsigned = true;
 		val[0] = 0;
 		n = 1;
 	}
 	else {									// dacă zerourile sunt doar la începutul numărului se sterg
 		for (int i = u; i < l; i++) {
-			str[i - u] = str[i];		
+			str[i - u] = str[i];
 		}
 		l -= u;			// se seteaza lungimea
 		while (l) {	// se scrie numărul în matrice
@@ -141,7 +160,7 @@ BigInteger::BigInteger(const char *st) {
 	}
 }
 
- BigInteger :: operator ++()
+BigInteger :: operator ++()
 {
 	count = count + 1;
 	return count;
@@ -172,12 +191,25 @@ int compare(const BigInteger &A, const BigInteger &B) {
 	if (A.n > B.n) return 1;			// comparând lungimea numerelor, dacă sunt diferite se returnează numarul mai mare
 	else if (A.n < B.n) return 2;
 	else {
-		for (int i = A.n - 1; i > -1; i--) { //Сравнение чисел от старшего разряда
+		for (int i = A.n - 1; i > -1; i--) { //se compara numerele descrescator
 			if (A.m[i] > B.m[i]) return 1;
 			else if (B.m[i] > A.m[i]) return 2;
 		}
-		return 0;//Если различий не найдено - числа одинаковые
+		return 0;					// daca nu se gasesc diferențe numerele raman la fel
 	}
+}
+
+BigInt operator ^ (const BigInt & base, int exp)
+{
+	BigInt result;
+	if (exponent == 0)
+	{
+		result.val.push_back(1);
+		return result;
+	}
+	for (i = 0; i < exp; i++)
+		result *= base;
+	return result;
 }
 
 bool BigInteger :: operator < (BigInteger x, BigInteger y)
@@ -249,36 +281,108 @@ BigInteger BigInteger::minim(BigInteger a, BigInteger b)
 	return b;
 }
 
-BigInteger BigInteger :: operator + (BigInteger a, BigInteger b)
-{
-	Set(a);
-	Set(b);
-	BigInt lol;
-	int rest = 0;
-	int j = max(a.size(), b.size());
-	for (int i = 0; i <= j - 1; i++)
-	{
-		if (i < a.size()) rest += a[i];
-		if (i < b.size()) rest += b[i];
-		lol.push_back(rest%base);
-		rest /= base;
+BigInteger BigInteger::operator+(const BigInteger &A) const {
+	BigInteger V;
+	V.n = max(A.n, n);
+	int r = 0;
+	if ((A.is_unsigned&&is_unsigned) || ((!A.is_unsigned) && (!is_unsigned))) {
+		for (int i = 0; i < V.n; i++) {
+			V.m[i] = m[i] + A.m[i] + r;
+			if (V.m[i] >= 10) {
+				r = 1;
+				V.m[i] -= 10;
+			}
+			else r = 0;
+		}
+		if (r > 0) {
+			V.n++;
+			V.m[V.n - 1] = r;
+		}
+		if (!A.is_unsigned && !is_unsigned) V.is_unsigned = false;
 	}
-	if (rest)
-		bas.push_back(rmd);
-	Set(lol);
-	return lol;
+	else {//dacă semnele sunt diferite, scade de la cele mai mari la cele mai mici 
+
+		int y = compare(*this, A);
+		if (y == 1) {								// dacă primul este mai mult decât al doilea
+			V.n = n;
+			int r = 0;
+			for (int i = 0; i < V.n; i++) {
+				V.m[i] = m[i] - A.m[i] - r;
+				if (V.m[i] < 0) {
+					r = 1;
+					V.m[i] += 10;
+				}
+				else r = 0;
+			}
+			while (V.m[V.n - 1] == 0 && V.n > 1) V.n--;
+			V.is_unsigned = is_unsigned;
+		}
+		else if (y == 2) {					// dacă al doilea este mai mare decât primul
+			V.n = A.n;
+			int r = 0;
+			for (int i = 0; i < V.n; i++) {
+				V.m[i] = A.m[i] - m[i] - r;
+				if (V.m[i] < 0) {
+					r = 1;
+					V.m[i] += 10;
+				}
+				else r = 0;
+			}
+			while (V.m[V.n - 1] == 0 && V.n > 1) V.n--;
+			V.is_unsigned = A.is_unsigned;
+		}
+		else if (y == 0) {		//daca numerele sunt egale atunci setate la zero
+			V.n = 1;
+			V.m[0] = 0;
+		}
+	}
+	return V;
 }
 
-BigInteger BigInteger :: operator + (BigInteger a, int b)
-{
-	return a + Integer(b);
+BigInteger BigInteger::operator+(long long a) const {
+	BigInteger A(a);
+	return *this + A;
 }
 
-BigInteger BigInteger :: operator ++ (BigInteger &a)
-{
-	a = a + 1;
-	return a;
+
+BigInteger operator+(long long a, const BigInteger &A) {
+	BigInteger V(a);
+	return V + A;
 }
+
+
+BigInteger BigInteger::operator+=(const BigInteger &A) {
+	*this = *this + A;
+	return *this;
+}
+
+
+BigInteger BigInteger::operator+=(long long a) {
+	BigInteger A(a);
+	*this = *this + A;
+	return *this;
+}
+
+
+BigInteger BigInteger::operator-(const BigInteger &A) const { //se schimba semnul -> se transforma in opusul lui si se trateaza cazul pozitiv
+	BigInteger N1 = A;
+	if (N1.signplus) N1.signplus = false;
+	else N1.signplus = true;
+	return *this + N1;
+}
+
+
+BigInteger BigInteger::operator-(long long a) {
+	BigInteger A(a);
+	return *this - A;
+}
+
+
+BigInteger operator-(long long a, const BigInteger &A) {
+	BigInteger V(a);
+	return V - A;
+}
+
 
 void BigInteger :: operator += (BigInteger &a, BigInteger b)
 {
@@ -458,3 +562,4 @@ void BigInteger :: operator %= (BigInteger &a, BigInteger b) {
 void BigInteger :: operator %= (BigInteger &a, int b) {
 	a = a % Integer(b);
 }
+ак вычитаемого на противоположный и обрабатывать как сложение
