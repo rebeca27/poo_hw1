@@ -203,11 +203,11 @@ BigInteger BigInteger :: operator + (BigInteger a, BigInteger b)
 	{
 		if (i < a.size()) rest += a[i];
 		if (i < b.size()) rest += b[i];
-		lol.push_back(rest%baza);
-		rest /= baza;
+		lol.push_back(rest%base);
+		rest /= base;
 	}
 	if (rest) 
-		bas.push_back(rest);
+		bas.push_back(rmd);
 	Set(lol);
 	return lol;
 }
@@ -233,18 +233,18 @@ void BigInteger :: operator += (BigInteger &a, int b)
 	a = a + b;
 }
 
-BigInteger BigInteger :: operator - (BigInteger a, BigInteger b) 
+BigInteger BigInteger :: operator - (BigInteger a, BigInteger b) 	//rmd=remainder
 {
 	Set(a);
 	Set(b);
 	BigInteger lol;
-	int rest = 0; 
+	int rmd = 0; 
 	for(i = 0; i <= a.size() - 1; i++)
 	{
-		rest += a[i] - (i < b.size() ? b[i] : 0);
-		if (rest < 0)
-			lol.push_back(rest + baza), rest = -1;
-		else lol.push_back(rest), rest = 0;
+		rmd += a[i] - (i < b.size() ? b[i] : 0);
+		if (rmd < 0)
+			lol.push_back(rmd + base), rmd = -1;
+		else lol.push_back(rmd), rmd = 0;
 	}
 	Set(lol);
 	return lol;
@@ -280,11 +280,11 @@ BigInteger BigInteger :: operator * (BigInteger t, BigInteger b)
 	for (i = 0; i <= t.size() - 1; i++)
 	{
 		a carry = 0ll;
-		for (int j = 0; j < b.size() || rest > 0; j++)
+		for (int j = 0; j < b.size() || rmd > 0; j++)
 		{
-			a s = lol[i + j] + rest + (a)t[i] * (j < b.size() ? (a)b[j] : 0ll);
-			lol[i + j] = s % baza;
-			rest = s / baza;
+			a s = lol[i + j] + rmd + (a)t[i] * (j < b.size() ? (a)b[j] : 0ll);
+			lol[i + j] = s % base;
+			rest = s / base;
 		}
 	}
 	Set(lol);
@@ -316,20 +316,20 @@ BigInteger BigInteger :: operator / (BigInteger a, BigInteger b)
 
 	for (int i = a.size() - 1; i >= 0; i--)
 	{
-		cur.insert(cur.begin(), a[i]);
-		int x = 0, L = 0, R = baza;
+		cur.insert (cur.begin(), a[i]);
+		int x = 0, L = 0, R = base;
 		while (L <= R) {
 			int mid = (L + R) >> 1;
-			if (b*Integer(mij) > ent)
+			if (b*Integer(mid) > ent)
 			{
-				x = mij;
-				R = mij - 1;
+				x = mid;
+				R = mid - 1;
 			}
 			else
-				L = mij + 1;
+				L = mid + 1;
 		}
-		ent = ent - Integer(x - 1)*b;
-		ans.insert(ans.begin(), x - 1);
+		ent = ent - Integer (x - 1) * b;
+		ans.insert (ans.begin(), x - 1);
 	}
 	Set(lol);
 	return lol;
@@ -342,7 +342,7 @@ BigInteger BigInteger :: operator / (BigInteger t, int b)
 	t ent = 0ll;
 	for(i = t.size() - 1; i >= 0; i--)
 	{
-		ent = (ent*(a)baza + (a)t[i]);
+		ent = (ent*(a)base + (a)t[i]);
 		lol.insert(lol.begin(), ent / b);
 		ent %= b;
 	}
@@ -368,15 +368,15 @@ BigInteger BigInteger :: operator % (BigInteger a, BigInteger b)
 	for(i = a.size() - 1; i >= 0; i--)
 	{
 		lol.insert(lol.begin(), a[i]);
-		int x = 0, L = 0, R = baza;
+		int x = 0, L = 0, R = base;
 		while (L <= R) {
-			int mij = (L + R) >> 1;
+			int mid = (L + R) >> 1;
 			if (b*Integer(mij) > lol) {
-				x = mij;
-				R = mij - 1;
+				x = mid;
+				R = mid - 1;
 			}
 			else
-				L = mij + 1;
+				L = mid + 1;
 		}
 		lol = lol - Integer(x - 1)*b;
 	}
@@ -390,7 +390,7 @@ int BigInteger :: operator % (BigInteger a, int b)
 	if (b == 0) return -1;
 	int gcc = 0;
 	for (i = a.size() - 1; i >= 0; i--)
-		gcc = (gcc*(base%b) + a[i] % b) % b;
+		gcc = (gcc * (base % b ) + a[i] % b ) % b;
 	return gcc;
 }
 
