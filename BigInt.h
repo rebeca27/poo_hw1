@@ -15,10 +15,10 @@ public:
 	char getSign();
 	char* toString();
 
-void BigInteger :: operator ++();
-void BigInteger :: operator --();
-void BigInteger :: operator >> (istream &in, BigInteger &a);
-void BigInteger :: operator << (ostream &out, BigInteger a);
+BigInteger operator ++();
+BigInteger operator --();
+stream &operator >> (istream &in, BigInteger &a);
+stream operator << (ostream &out, BigInteger a);
 friend bool operator < (BigInteger x, BigInteger y);
 friend bool operator > (BigInteger a, BigInteger b);
 friend bool operator == (BigInteger a, BigInteger b);
@@ -35,38 +35,36 @@ friend BigInteger operator + (BigInteger a, BigInteger b);
 friend BigInteger operator + (BigInteger a, int b);
 friend BigInteger operator ++ (BigInteger &a); 
 
-void operator += (BigInteger &a, BigInteger b);
-void operator += (BigInteger &a, int b);
+BigInteger &operator += (BigInteger &a, BigInteger b);
+BigInteger &operator += (BigInteger &a, int b);
 	
 friend BigInteger operator - (BigInteger a, BigInteger b) ;
 friend BigInteger operator - (BigInteger a, int b);
-
 friend void operator -- (BigInteger &a);
-void operator -= (BigInteger &a, BigInteger b);
-void operator -= (BigInteger &a, int b);
+BigInteger &operator -= (BigInteger &a, BigInteger b);
+BigInteger &operator -= (BigInteger &a, int b);
 
 friend BigInteger operator * (BigInteger t, BigInteger b);
 
 friend BigInteger operator * (BigInteger a, int b);
 
-void operator *= (BigInteger &a, BigInt b) ;
+BigInteger &operator *= (BigInteger &a, BigInt b) ;
 
-void operator *= (BigInteger &a, int b) ;
+BigInteger &operator *= (BigInteger &a, int b) ;
 
 friend BigInteger operator / (BigInteger a, BigInteger b) ;
-
 friend BigInteger operator / (BigInteger t, int b) ;
 
-void operator /= (BigInteger &a, BigInteger b) ;
+BigInteger &operator /= (BigInteger &a, BigInteger b) ;
 
-void operator /= (BigInteger &a, int b) ;
+BigInteger &operator /= (BigInteger &a, int b) ;
 
 friend BigInteger operator % (BigInteger a, BigInteger b);
 
 friend int operator % (BigInteger a, int b);
 
-void operator %= (BigInteger &a, BigInteger b);
-void operator %= (BigInteger &a, int b);
+BigInteger &operator %= (BigInteger &a, BigInteger b);
+BigInteger &operator %= (BigInteger &a, int b);
 	
 private:
 	char* numberSequence;
