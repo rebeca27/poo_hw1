@@ -71,6 +71,7 @@ public:
 private:
 	int val;
 	int base;
-	bool isUnsigned;
+	bool is_unsigned;
+	bool sign_plus;
 	std::vector<unsigned char> val;
 }

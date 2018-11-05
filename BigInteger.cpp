@@ -16,24 +16,27 @@ BigInteger::BigInteger(long long int val, unsigned char base = '10')
 
 BigInteger::BigInteger(const std::string& val, unsigned char base = '10')
 {
+	if (val[0] == '-') sign_minus = '-';
+	else if (val[0] == '+')  sign_plus = '+';
+	else
+		for (int i = 1; i < val.length; i++) {
+			if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
+				this->val[i] = val[i];
+			}
+			else {
+				throw std::runtime_error("valoarea introdusa nu este un numar valid");
+			}
+		}
 
-	for (int i = 0; i < val.length; i++) {
-		if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
-			this->val[i] = val[i];
-		}
-		else {
-			throw std::runtime_error("valoarea introdusa nu este un numar valid");
-		}
+	for (int i = val.length() - 1; i >= 1; i--)
+	{
+		if (strchr("0123456789", val[i]) == NULL)
+			throw std::runtime_error("stringul initial nu este un numar");
+		val.push_back(val[i]);
 	}
 
 	this->val = (const std::string&)val;
 	this->base = 10;
-}
-
-BigInteger::~BigInteger()
-{
-	delete this->val;
-	delete &this->base;
 }
 
 int BigInteger::getBase()
@@ -43,12 +46,13 @@ int BigInteger::getBase()
 
 char BigInteger::getSign()
 {
-	return this->isUnsigned ? '+' : '-';
+	return this->is_unsigned ? '+' : '-';
 }
 
-char* BigInteger::toString()
+BigInteger::~BigInteger()
 {
-	return this->numberSequence;
+	delete this->val;
+	delete &this->base;
 }
 
 BigInteger BigInteger::Integer(char a[])                  //returneaza forma string a unui numar
@@ -82,9 +86,9 @@ BigInteger::BigInteger(const char *st) {
 	char str[250];
 	for (int i = 0; i < l; i++) str[i] = st[i];     // se copiaza sirul pe o linie noua
 
-	if (str[0] == '-' || str[0] == '+') {         //Если указан знак числа, то установить его и удалить из строки
-		if (str[0] == '-') sign_plus = false;
-		else sign_plus = true;
+	if (str[0] == '-' || str[0] == '+') {         //daca se gaseste semn la inceput atunci daca e negativ  
+		if (str[0] == '-') sign_plus = false;		//variabila semnului pozitiv va primi valoarea negativa
+		else sign_plus = true;				//altfel daca e pozitiv variabila semnului pozitiv va primi valoarea pozitiva
 		for (int i = 1; i < l; i++) {
 			str[i - 1] = str[i];
 		}
