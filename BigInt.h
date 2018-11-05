@@ -1,17 +1,11 @@
 #Rebeca_Oprea_grupa_252
-
-using namespace std;
+#include <vector>
 
 typedef int64_t a;
 typedef long long ll;
 
 class BigInteger
 {
-private:
-	char* numberSequence;
-	int base;
-	bool isUnsigned;
-
 public:
 	BigInteger();
 	BigInteger(const char* numberSequence);
@@ -74,4 +68,9 @@ friend int operator % (BigInteger a, int b);
 void operator %= (BigInteger &a, BigInteger b);
 void operator %= (BigInteger &a, int b);
 	
+private:
+	char* numberSequence;
+	int base;
+	bool isUnsigned;
+	std::vector<char>; 
 }
