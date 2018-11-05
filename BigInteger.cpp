@@ -44,7 +44,7 @@ char* BigInteger::toString()
 
 const int baza = 10;
 
-BigInteger Integer(char a[])                  //returneaza forma string a unui numar
+BigInteger BigInteger :: Integer(char a[])                  //returneaza forma string a unui numar
 {
 	string r = "";
 	for(i = 0; i <= strlen(a) - 1; i++) 
@@ -52,14 +52,14 @@ BigInteger Integer(char a[])                  //returneaza forma string a unui n
 	return r;
 }
 
-void Set(BigInteger &bi)             //se repeta structura while de cate ori vectorul are mai mult de 1 elem,
+void BigInteger :: Set(BigInteger &bi)             //se repeta structura while de cate ori vectorul are mai mult de 1 elem,
 				     //dar referinta ultimului element din vector este primul	
 	
 {
 	while (bi.size() > 1 && bi.back() == 0) bi.pop_back();
 }
 
-BigInteger Integer(string s) 
+BigInteger BigInteger :: Integer(string s) 
 {
 	BigInteger lol;
 	if (s[0] == '-') return lol;				//daca nuamrul este negativ se intoarce
@@ -77,14 +77,14 @@ BigInteger Integer(string s)
 	return lol;
 }
 
-BigInteger Integer(char ch[]) 
+BigInteger BigInteger :: Integer(char ch[]) 
 {
 	string s = "";
 	for(i = 0; i <= strlen(ch) - 1; s = s + ch[i]; i++)
 	return Integer(s);
 }
 
-BigInteger Integer(b x)
+BigInteger BigInteger :: Integer(b x)
 {
 	string r = "";
 	while (x > 0)
@@ -92,29 +92,29 @@ BigInteger Integer(b x)
 	return Integer(r);
 }
 
-BigInteger Integer(int x)
+BigInteger BigInteger :: Integer(int x)
 {
 	return Integer((b)x);
 }
 
-void operator ++() 
+void BigInteger :: operator ++() 
     { 
         count = count+1; 
     }
 
-void operator --() 
+void BigInteger :: operator --() 
     { 
         count = count-1; 
     }
 
-void operator >> (istream &in, BigInteger &a)
+void BigInteger :: operator >> (istream &in, BigInteger &a)
 {
 	string s;
 	getline(cin, s);
 	a = Integer(s);
 }
 
-void operator << (ostream &out, BigInteger a)
+void BigInteger :: operator << (ostream &out, BigInteger a)
 {
 	Set(a);
 	printf("%d", (a.size() == 0) ? 0 : a.back());
@@ -123,7 +123,7 @@ void operator << (ostream &out, BigInteger a)
 	printf("\n");
 }
 
-bool operator < (BigInteger x, BigInteger y)
+bool BigInteger :: operator < (BigInteger x, BigInteger y)
 {
 	Set(x);
 	Set(y);
@@ -135,47 +135,47 @@ bool operator < (BigInteger x, BigInteger y)
 	return false;
 }
 
-bool operator > (BigInteger a, BigInteger b) 
+bool BigInteger :: operator > (BigInteger a, BigInteger b) 
 {
 	return (b < a);
 }
 
-bool operator == (BigInteger a, BigInteger b)
+bool BigInteger :: operator == (BigInteger a, BigInteger b)
 {
 	return (!(a < b) && !(b < a));
 }
 
-bool operator <= (BigInteger a, BigInteger b) 
+bool BigInteger :: operator <= (BigInteger a, BigInteger b) 
 {
 	return (a < b || a == b);
 }
 
-bool operator >= (BigInteger a, BigInteger b)
+bool BigInteger :: operator >= (BigInteger a, BigInteger b)
 {
 	return (b < a || b == a);
 }
 
-bool operator < (BigInteger a, int b) 
+bool BigInteger :: operator < (BigInteger a, int b) 
 {
 	return (a < Integer(b));
 }
 
-bool operator > (BigInteger a, int b) 
+bool BigInteger :: operator > (BigInteger a, int b) 
 {
 	return (a > Integer(b));
 }
 
-bool operator == (BigInteger a, int b)
+bool BigInteger :: operator == (BigInteger a, int b)
 {
 	return (a == Integer(b));
 }
 
-bool operator >= (BigInteger a, int b)
+bool BigInteger :: operator >= (BigInteger a, int b)
 {
 	return (a >= Integer(b));
 }
 
-bool operator <= (BigInteger a, int b)
+bool BigInteger :: operator <= (BigInteger a, int b)
 {
 	return (a <= Integer(b));
 }
@@ -186,13 +186,13 @@ BigInteger maxim(BigInteger a, BigInteger b)
 	return b;
 }
 
-BigInteger minim(BigInteger a, BigInteger b) 
+BigInteger BigInteger :: minim(BigInteger a, BigInteger b) 
 {
 	if (a < b) return a;
 	return b;
 }
 
-BigInteger operator + (BigInteger a, BigInteger b)
+BigInteger BigInteger :: operator + (BigInteger a, BigInteger b)
 {
 	Set(a);
 	Set(b);
@@ -212,28 +212,28 @@ BigInteger operator + (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInteger operator + (BigInteger a, int b)
+BigInteger BigInteger :: operator + (BigInteger a, int b)
 {
 	return a + Integer(b);
 }
 
-BigInteger operator ++ (BigInteger &a) 
+BigInteger BigInteger :: operator ++ (BigInteger &a) 
 { 
 	a = a + 1;
 	return a;
 }
 
-void operator += (BigInteger &a, BigInteger b)
+void BigInteger :: operator += (BigInteger &a, BigInteger b)
 {
 	a = a + b;
 }
 
-void operator += (BigInteger &a, int b) 
+void BigInteger :: operator += (BigInteger &a, int b) 
 {
 	a = a + b;
 }
 
-BigInteger operator - (BigInteger a, BigInteger b) 
+BigInteger BigInteger :: operator - (BigInteger a, BigInteger b) 
 {
 	Set(a);
 	Set(b);
@@ -250,28 +250,28 @@ BigInteger operator - (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInteger operator - (BigInteger a, int b)
+BigInteger BigInteger :: operator - (BigInteger a, int b)
 {
 	return a - Integer(b);
 }
 
-void operator -- (BigInteger &a) 
+void BigInteger :: operator -- (BigInteger &a) 
 { 
 	a = a - 1;
 }
 
-void operator -= (BigInteger &a, BigInteger b) 
+void BigInteger :: operator -= (BigInteger &a, BigInteger b) 
 {
 	a = a + b;
 }
 
-void operator -= (BigInteger &a, int b) 
+void BigInteger :: operator -= (BigInteger &a, int b) 
 {
 	a = a - b;
 }
 
 
-BigInteger operator * (BigInteger t, BigInteger b)
+BigInteger BigInteger :: operator * (BigInteger t, BigInteger b)
 {
 	Set(t);
 	Set(b);
@@ -291,23 +291,23 @@ BigInteger operator * (BigInteger t, BigInteger b)
 	return lol;
 }
 
-BigInteger operator * (BigInteger a, int b)
+BigInteger BigInteger :: operator * (BigInteger a, int b)
 {
 	return a * Integer(b);
 }
 
-void operator *= (BigInteger &a, BigInt b) 
+void BigInteger :: operator *= (BigInteger &a, BigInt b) 
 {
 	a = a * b;
 }
 
-void operator *= (BigInteger &a, int b) 
+void BigInteger :: operator *= (BigInteger &a, int b) 
 {
 	a = a * b;
 }
 
 
-BigInteger operator / (BigInteger a, BigInteger b) 
+BigInteger BigInteger :: operator / (BigInteger a, BigInteger b) 
 {
 	Set(a);
 	Set(b);
@@ -335,7 +335,7 @@ BigInteger operator / (BigInteger a, BigInteger b)
 	return lol;
 }
 
-BigInteger operator / (BigInteger t, int b) 
+BigInteger BigInteger :: operator / (BigInteger t, int b) 
 {
 	Set(t);
 	BigInteger lol;
@@ -350,16 +350,16 @@ BigInteger operator / (BigInteger t, int b)
 	return lol;
 }
 
-void operator /= (BigInteger &a, BigInteger b) {
+void  BigInteger :: operator /= (BigInteger &a, BigInteger b) {
 	a = a / b;
 }
 
-void operator /= (BigInteger &a, int b) {
+void BigInteger :: operator /= (BigInteger &a, int b) {
 	a = a / b;
 }
 
 
-BigInteger operator % (BigInteger a, BigInteger b)
+BigInteger BigInteger :: operator % (BigInteger a, BigInteger b)
 {
 	Set(a);
 	Set(b);
@@ -384,7 +384,7 @@ BigInteger operator % (BigInteger a, BigInteger b)
 	return lol;
 }
 
-int operator % (BigInteger a, int b)
+int BigInteger :: operator % (BigInteger a, int b)
 {
 	Set(a);
 	if (b == 0) return -1;
@@ -394,10 +394,10 @@ int operator % (BigInteger a, int b)
 	return gcc;
 }
 
-void operator %= (BigInteger &a, BigInteger b) {
+void BigInteger :: operator %= (BigInteger &a, BigInteger b) {
 	a = a % b;
 }
 
-void operator %= (BigInteger &a, int b) {
+void BigInteger :: operator %= (BigInteger &a, int b) {
 	a = a % Integer(b);
 }
