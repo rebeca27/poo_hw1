@@ -30,7 +30,7 @@ BigInteger Integer(char a[])
 	string r = "";
 	for(i = 0; i <= strlen(a) - 1; i++) 
 		r = r + a[i];
-	return Integer(r);
+	return r;
 }
 
 void Set(BigInteger &bi) 
