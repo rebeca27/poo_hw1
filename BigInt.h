@@ -357,10 +357,10 @@ int operator % (BigInteger a, int b)
 {
 	Set(a);
 	if (b == 0) return -1;
-	int Gucci = 0;
+	int gcc = 0;
 	for (i = a.size() - 1; i >= 0; i--)
-		Gucci = (Gucci*(base%b) + a[i] % b) % b;
-	return Gucci;
+		gcc = (gcc*(base%b) + a[i] % b) % b;
+	return gcc;
 }
 
 void operator %= (BigInteger &a, BigInteger b) {
