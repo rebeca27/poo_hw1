@@ -25,7 +25,7 @@ public:
 
 const int baza = 10;
 
-BigInteger Integer(char a[])                  //returneaza forma de integer
+BigInteger Integer(char a[])                  //returneaza forma string a unui numar
 {
 	string r = "";
 	for(i = 0; i <= strlen(a) - 1; i++) 
@@ -43,7 +43,7 @@ void Set(BigInteger &bi)             //se repeta structura while de cate ori vec
 BigInteger Integer(string s) 
 {
 	BigInteger lol;
-	if (s[0] == '-') return lol;
+	if (s[0] == '-') return lol;				//daca nuamrul este negativ se intoarce
 	if (s.size() == 0) 
 	{ lol.push_back(0); 
 	return lol; 
