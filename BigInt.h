@@ -23,7 +23,7 @@ public:
 
 };
 
-const int baza = 1e9;  //Format: 1,000,000,000.00
+const int baza = 10;
 
 BigInteger Integer(char a[])                  //returneaza forma de integer
 {
