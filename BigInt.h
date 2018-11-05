@@ -21,32 +21,10 @@ public:
 	char getSign();
 	char* toString();
 
-void operator ++() 
-    { 
-        count = count+1; 
-    }
-
-void operator --() 
-    { 
-        count = count-1; 
-    }
-
-void operator >> (istream &in, BigInteger &a)
-{
-	string s;
-	getline(cin, s);
-	a = Integer(s);
-}
-
-void operator << (ostream &out, BigInteger a)
-{
-	Set(a);
-	printf("%d", (a.size() == 0) ? 0 : a.back());
-	for(i = a.size() - 2; i >= 0; i--)
-		printf("%09d", a[i]); 
-	printf("\n");
-}
-
+void BigInteger :: operator ++();
+void BigInteger :: operator --();
+void BigInteger :: operator >> (istream &in, BigInteger &a);
+void BigInteger :: operator << (ostream &out, BigInteger a);
 friend bool operator < (BigInteger x, BigInteger y);
 friend bool operator > (BigInteger a, BigInteger b);
 friend bool operator == (BigInteger a, BigInteger b);
@@ -96,4 +74,4 @@ friend int operator % (BigInteger a, int b);
 void operator %= (BigInteger &a, BigInteger b);
 void operator %= (BigInteger &a, int b);
 	
-;}
+}
