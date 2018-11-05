@@ -119,8 +119,8 @@ void BigInteger :: operator << (ostream &out, BigInteger a)
 	Set(a);
 	printf("%d", (a.size() == 0) ? 0 : a.back());
 	for(i = a.size() - 2; i >= 0; i--)
-		printf("%09d", a[i]); 
-	printf("\n");
+		std::cout << a[i]; 
+	std::cout << '\n';
 }
 
 bool BigInteger :: operator < (BigInteger x, BigInteger y)
