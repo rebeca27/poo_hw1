@@ -18,7 +18,7 @@ public:
 stream &operator >> (istream &in, BigInteger &a);
 stream operator << (ostream &out, BigInteger a);
 friend bool operator < (BigInteger x, BigInteger y);
-friend bool operator > (BigInteger a, BigInteger b);
+friend bool operator > (const BigInteger &a, BigInteger b);
 friend bool operator == (BigInteger a, BigInteger b);
 friend bool operator <= (BigInteger a, BigInteger b);
 friend bool operator >= (BigInteger a, BigInteger b);
@@ -31,14 +31,12 @@ friend BigInteger maxim(BigInteger a, BigInteger b);
 friend BigInteger minim(BigInteger a, BigInteger b);
 friend BigInteger operator + (BigInteger a, BigInteger b);
 friend BigInteger operator + (BigInteger a, int b);
-friend BigInteger operator ++ (BigInteger &a); 
 
-BigInteger &operator += (BigInteger &a, BigInteger b);
-BigInteger &operator += (BigInteger &a, int b);
+BigInteger &operator += (BigInteger a, BigInteger b);
+BigInteger &operator += (BigInteger a, int b);
 	
 friend BigInteger operator - (BigInteger a, BigInteger b) ;
 friend BigInteger operator - (BigInteger a, int b);
-friend void operator -- (BigInteger &a);
 BigInteger &operator -= (BigInteger &a, BigInteger b);
 BigInteger &operator -= (BigInteger &a, int b);
 
