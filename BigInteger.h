@@ -23,12 +23,12 @@ public:
 	bool operator==(const BigInteger &A) const;
 	bool operator!=(const BigInteger &A) const;
 
-	friend bool operator < (const BigInteger &x, const  BigInteger &y);
-	friend bool operator > (const BigInteger &a, const  BigInteger &b);
+	friend bool operator < (const BigInteger &b);
+	friend bool operator > (const BigInteger &b);
 	friend bool operator < (const BigInteger &a, int b);
 	friend bool operator > (const BigInteger &a, int b);
 	friend bool operator == (const BigInteger &a, const  BigInteger &b);
-	friend bool operator == (const BigInteger &a, int b);
+	friend bool operator == (BigInteger b);
 	friend bool operator <= (const BigInteger &a, const  BigInteger &b);
 	friend bool operator >= (const BigInteger &a, const  BigInteger &b);
 	friend bool operator >= (const BigInteger &a, int b);
@@ -42,9 +42,9 @@ public:
 	friend BigInteger operator+(const BigInteger &A) const;
 	friend BigInteger operator+(long long a) const;
 	friend BigInteger operator+(long long a, const BigInteger &A);
+	BigInteger &operator += (const BigInteger &A;
+	BigInteger &operator += (long long a);
 
-	BigInteger &operator += (BigInteger a, BigInteger b);
-	BigInteger &operator += (BigInteger a, int b);
 
 	friend BigInteger operator - (BigInteger a, BigInteger b);
 	friend BigInteger operator - (BigInteger a, int b);

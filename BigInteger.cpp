@@ -7,8 +7,13 @@
 #include<cstdlib>
 #include <sstream>
 #include <cmath>
-#include "BigInt.h"
+#include "BigInteger.h"
 
+BigInteger::BigInteger() // initializeaza vectorul cu 0
+{
+	val  = "0";
+	is_unsigned = false;
+}
 
 BigInteger::BigInteger(int val, unsigned char base)
 {
@@ -175,7 +180,7 @@ BigInteger :: operator --()
 }
 
 
-istream& operator >> (istream &in, BigInteger &A) {
+BigInteger:: istream& operator >> (istream &in, BigInteger &A) {
 	char str[250];										// string pentru a scrie caracterele
 	stream >> str;										// citiți caracterele
 	BigInteger B(str);
@@ -183,14 +188,14 @@ istream& operator >> (istream &in, BigInteger &A) {
 	return stream;
 }
 
-ostream& operator << (ostream &out, const BigInteger &A)
+BigInteger:: ostream& operator << (ostream &out, const BigInteger &A)
 {
 	if (!A.signplus) out << '-';							//afisati semnul dacă numărul este negativ
 	for (int i = A.n - 1; i >= 0; i--) out << A.m[i];
 	return out;
 }
 
-int compare(const BigInteger &A, const BigInteger &B) {
+int BigInteger:: compare(const BigInteger &A, const BigInteger &B) {
 	if (A.n > B.n) return 1;			// comparând lungimea numerelor, dacă sunt diferite se returnează numarul mai mare
 	else if (A.n < B.n) return 2;
 	else {
@@ -202,7 +207,7 @@ int compare(const BigInteger &A, const BigInteger &B) {
 	}
 }
 
-BigInt operator ^ (const BigInt & base, int exp)
+BigInteger BigInteger:: operator ^ (const BigInt & base, int exp)
 {
 	BigInt result;
 	if (exponent == 0)
@@ -215,26 +220,23 @@ BigInt operator ^ (const BigInt & base, int exp)
 	return result;
 }
 
-bool BigInteger :: operator < (BigInteger x, BigInteger y)
+bool BigInteger :: operator < (BigInteger b)
 {
-	Set(x);
-	Set(y);
-	if (x.size() != y.size())
-		return (x.size() < y.size());
-	for (int i = x.size() - 1, i >= 0; i--)
-		if (x[i] != y[i])
-			return (x[i] < y[i]);
-	return false;
+	return less((*this), b);
 }
 
-bool BigInteger :: operator > (BigInteger a, BigInteger b)
+bool BigInteger :: operator > (BigInteger b)
 {
-	return (b < a);
+	return greater((*this), b);
 }
 
 bool BigInteger :: operator == (BigInteger a, BigInteger b)
 {
 	return (!(a < b) && !(b < a));
+}
+bool BigInteger:: operator == (BigInteger b)
+{
+	return equals((*this), b);
 }
 
 bool BigInteger :: operator <= (BigInteger a, BigInteger b)
@@ -257,10 +259,6 @@ bool BigInteger :: operator > (BigInteger a, int b)
 	return (a > Integer(b));
 }
 
-bool BigInteger :: operator == (BigInteger a, int b)
-{
-	return (a == Integer(b));
-}
 
 bool BigInteger :: operator >= (BigInteger a, int b)
 {
@@ -272,7 +270,7 @@ bool BigInteger :: operator <= (BigInteger a, int b)
 	return (a <= Integer(b));
 }
 
-BigInteger maxim(BigInteger a, BigInteger b)
+BigInteger BigInteger:: maxim(BigInteger a, BigInteger b)
 {
 	if (a > b) return a;
 	return b;
@@ -347,54 +345,37 @@ BigInteger BigInteger::operator+(long long a) const {
 	return *this + A;
 }
 
-
-BigInteger operator+(long long a, const BigInteger &A) {
+BigInteger BigInteger:: operator+(long long a, const BigInteger &A) {
 	BigInteger V(a);
 	return V + A;
 }
-
 
 BigInteger BigInteger::operator+=(const BigInteger &A) {
 	*this = *this + A;
 	return *this;
 }
 
-
-BigInteger BigInteger::operator+=(long long a) {
+BigInteger BigInteger:: operator+=(long long a) {
 	BigInteger A(a);
 	*this = *this + A;
 	return *this;
 }
 
-
 BigInteger BigInteger::operator-(const BigInteger &A) const { //se schimba semnul -> se transforma in opusul lui si se trateaza cazul pozitiv
 	BigInteger N1 = A;
-	if (N1.signplus) N1.signplus = false;
-	else N1.signplus = true;
+	if (N1.is_unsigned) N1.is_unsigned = false;
+	else N1.is_unsigned = true;
 	return *this + N1;
 }
-
 
 BigInteger BigInteger::operator-(long long a) {
 	BigInteger A(a);
 	return *this - A;
 }
 
-
 BigInteger operator-(long long a, const BigInteger &A) {
 	BigInteger V(a);
 	return V - A;
-}
-
-
-void BigInteger :: operator += (BigInteger &a, BigInteger b)
-{
-	a = a + b;
-}
-
-void BigInteger :: operator += (BigInteger &a, int b)
-{
-	a = a + b;
 }
 
 BigInteger BigInteger :: operator - (BigInteger a, BigInteger b) 	//rmd=remainder
