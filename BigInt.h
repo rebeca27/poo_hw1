@@ -78,6 +78,16 @@ BigInteger Integer(int x)
 	return Integer((b)x);
 }
 
+void operator ++() 
+    { 
+        count = count+1; 
+    }
+
+void operator --() 
+    { 
+        count = count-1; 
+    }
+
 void operator >> (istream &in, BigInteger &a)
 {
 	string s;
