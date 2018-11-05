@@ -20,7 +20,12 @@ public:
 	friend ostream& operator << (ostream &out, const BigInteger &A);
 	friend istream& operator >> (istream &in, BigInteger &A);
 
-	friend int compare(const BigInteger &A, const BigInteger &B);
+   //functii suplimentare cerintelor din seminar dar necesare codului
+	int compare(const BigInteger &A, const BigInteger &B);
+	BigInteger &operator ++(); // prefix
+	friend BigInteger  operator ++(int); // postfix
+	BigInteger &operator --(); // prefix
+	friend BigInteger  operator --(int); // postfix
 
 	bool operator==(const BigInteger &A) const;
 	bool operator!=(const BigInteger &A) const;
@@ -35,9 +40,6 @@ public:
 	friend bool operator <= (const BigInteger &b)
 	friend bool operator >= (const BigInteger &a, const  BigInteger &b);
 	friend bool operator >= (const BigInteger &b);
-
-	friend BigInteger maxim(BigInteger a, BigInteger b);
-	friend BigInteger minim(BigInteger a, BigInteger b);
 
 	friend BigInt operator ^ (const BigInt &base, int exp);
 

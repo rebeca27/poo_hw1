@@ -160,6 +160,42 @@ bool BigInteger::greater(BigInteger n1, BigInteger n2)
 	return !equals(n1, n2) && !less(n1, n2);
 }
 
+// incrementeaza valoarea, si apoi ii returneaza valorea 
+BigInteger& BigInteger::operator ++() // prefix
+{
+	(*this) = (*this) + 1;
+	return (*this);
+}
+
+// returneaza valorea, si apoi ii incrementeaza valoarea
+BigInteger BigInteger::operator ++(int) // postfix
+{
+	BigInteger before = (*this);
+
+	(*this) = (*this) + 1;
+
+	return before;
+}
+
+// decrementeaza valoarea, si apoi ii returneaza valorea 
+BigInteger& BigInteger::operator --() // prefix
+{
+	(*this) = (*this) - 1;
+	return (*this);
+
+}
+
+// returneaza valorea, si apoi ii decrementeaza valoarea
+BigInteger BigInteger::operator --(int) // postfix
+{
+	BigInteger before = (*this);
+
+	(*this) = (*this) - 1;
+
+	return before;
+}
+
+
 BigInteger::BigInteger(long long a) {
 	int n = 0;
 	for (int i = 0; i < 250; i++) m[i] = 0;
@@ -308,17 +344,6 @@ bool BigInteger::operator >= (BigInteger b)
 		|| greater((*this), b);
 }
 
-BigInteger BigInteger:: maxim(BigInteger a, BigInteger b)
-{
-	if (a > b) return a;
-	return b;
-}
-
-BigInteger BigInteger::minim(BigInteger a, BigInteger b)
-{
-	if (a < b) return a;
-	return b;
-}
 
 BigInteger BigInteger::operator+(const BigInteger &A) const {
 	BigInteger V;
@@ -339,7 +364,7 @@ BigInteger BigInteger::operator+(const BigInteger &A) const {
 		}
 		if (!A.is_unsigned && !is_unsigned) V.is_unsigned = false;
 	}
-	else {//dacă semnele sunt diferite, scade de la cele mai mari la cele mai mici 
+	else {								//dacă semnele sunt diferite, scade de la cele mai mari la cele mai mici 
 
 		int y = compare(*this, A);
 		if (y == 1) {								// dacă primul este mai mult decât al doilea
