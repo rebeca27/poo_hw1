@@ -13,6 +13,7 @@ public:
 	virtual ~BigInteger();			//functia virtuala asigură că se apeleaza corect funcția pentru un obiect
 	int getBase();
 	char getSign();
+	void setSign(bool s);
 	char* toString();
 
 	friend ostream& operator << (ostream &out, const BigInteger &A);
@@ -28,11 +29,11 @@ public:
 	friend bool operator < (const BigInteger &a, int b);
 	friend bool operator > (const BigInteger &a, int b);
 	friend bool operator == (const BigInteger &a, const  BigInteger &b);
-	friend bool operator == (BigInteger b);
+	friend bool operator == (const BigInteger b);
 	friend bool operator <= (const BigInteger &a, const  BigInteger &b);
+	friend bool operator <= (const BigInteger &b)
 	friend bool operator >= (const BigInteger &a, const  BigInteger &b);
-	friend bool operator >= (const BigInteger &a, int b);
-	friend bool operator <= (const BigInteger &a, int b);
+	friend bool operator >= (const BigInteger &b);
 
 	friend BigInteger maxim(BigInteger a, BigInteger b);
 	friend BigInteger minim(BigInteger a, BigInteger b);
@@ -46,21 +47,26 @@ public:
 	BigInteger &operator += (long long a);
 
 
-	friend BigInteger operator - (BigInteger a, BigInteger b);
-	friend BigInteger operator - (BigInteger a, int b);
+	friend BigInteger operator - (const BigInteger &A) const;
+	friend BigInteger operator - (long long a) const;
+	friend BigInteger operator - (long long a, const BigInteger &A);
 
-	BigInteger &operator -= (BigInteger &a, BigInteger b);
-	BigInteger &operator -= (BigInteger &a, int b);
+	BigInteger &operator -= (const BigInteger &A);
+	BigInteger &operator -= (long long a);
 
 	friend BigInteger operator * (BigInteger t, BigInteger b);
 	friend BigInteger operator * (BigInteger a, int b);
 
+	BigInteger &operator *= (BigInteger b);
 	BigInteger &operator *= (BigInteger &a, BigInt b);
 	BigInteger &operator *= (BigInteger &a, int b);
+
+	friend BigInteger delete(const BigInteger &A);
 
 	friend BigInteger operator / (BigInteger a, BigInteger b);
 	friend BigInteger operator / (BigInteger t, int b);
 
+	BigInteger &operator /= (BigInteger b);
 	BigInteger &operator /= (BigInteger &a, BigInteger b);
 	BigInteger &operator /= (BigInteger &a, int b);
 
