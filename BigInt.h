@@ -15,8 +15,6 @@ public:
 	char getSign();
 	char* toString();
 
-BigInteger operator ++();
-BigInteger operator --();
 stream &operator >> (istream &in, BigInteger &a);
 stream operator << (ostream &out, BigInteger a);
 friend bool operator < (BigInteger x, BigInteger y);
