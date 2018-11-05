@@ -4,9 +4,6 @@ using namespace std;
 
 typedef int64_t a;
 typedef long long ll;
-typedef pair<a, a> a;
-typedef pair<a, int> ai;
-typedef pair<int, int> ii;
 
 class BigInteger
 {
