@@ -70,5 +70,5 @@ private:
 	char* numberSequence;
 	int base;
 	bool isUnsigned;
-	std::vector<unsigned char>;
+	std::vector<unsigned char> val;
 }

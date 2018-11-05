@@ -1,20 +1,29 @@
 ﻿#include "pch.h"
 #include "BigInteger.h"
 
-BigInteger::BigInteger(int val, unsigned char base)
+BigInteger::BigInteger(int val = 0, unsigned char base = '10')
 {
-	this->val = 0;
-	this->base = 10;
+	this->val = val;
+	this->base = base;
 }
 
-BigInteger::BigInteger(long long int val , unsigned char)
+BigInteger::BigInteger(long long int val , unsigned char base = '10')
 {
 	this->val = (long long int)val;
 	this->base = 10;
 }
 
-BigInteger::BigInteger(const std::string&,unsigned char)
+BigInteger::BigInteger(const std::string& val,unsigned char base = '10')
 {
+
+	for (int i = 0; i < val.length; i++) {
+		if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
+			this->val[i] = val[i];
+		} else {
+			throw std::runtime_error("valoarea introdusa nu este un numar valid");
+		}
+	}
+
 	this->val = (const std::string&)val;
 	this->base = 10;
 }
@@ -82,13 +91,24 @@ istream& operator >> (istream &in, BigInteger &A) {
 	return stream;
 }
 
-ostream& operator<<(ostream &out, const BigInteger &A)
+ostream& operator << (ostream &out, const BigInteger &A)
 {
 	if (!A.signplus) out << '-';							//Afisati semnul dacă numărul este negativ
 	for (int i = A.n - 1; i >= 0; i--) out << A.m[i];
 	return out;
 }
 
+int compare(const BigInteger &A, const BigInteger &B) {
+	if (A.n > B.n) return 1;//Сравнение длины чисел, если они различны - сразу вернуть большее число
+	else if (A.n < B.n) return 2;
+	else {
+		for (int i = A.n - 1; i > -1; i--) { //Сравнение чисел от старшего разряда
+			if (A.m[i] > B.m[i]) return 1;
+			else if (B.m[i] > A.m[i]) return 2;
+		}
+		return 0;//Если различий не найдено - числа одинаковые
+	}
+}
 
 bool BigInteger :: operator < (BigInteger x, BigInteger y)
 {
