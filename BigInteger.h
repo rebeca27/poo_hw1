@@ -1,5 +1,5 @@
-
 //Rebeca_Oprea_grupa_252
+
 #include <vector>
 #include <cstring>
 #include <algorithm>
@@ -23,16 +23,16 @@ public:
 	bool operator==(const BigInteger &A) const;
 	bool operator!=(const BigInteger &A) const;
 
-	friend bool operator < (BigInteger x, BigInteger y);
-	friend bool operator > (const BigInteger &a, BigInteger b);
-	friend bool operator < (BigInteger a, int b);
-	friend bool operator > (BigInteger a, int b);
-	friend bool operator == (BigInteger a, BigInteger b);
-	friend bool operator == (BigInteger a, int b);
-	friend bool operator <= (BigInteger a, BigInteger b);
-	friend bool operator >= (BigInteger a, BigInteger b);
-	friend bool operator >= (BigInteger a, int b);
-	friend bool operator <= (BigInteger a, int b);
+	friend bool operator < (const BigInteger &x, const  BigInteger &y);
+	friend bool operator > (const BigInteger &a, const  BigInteger &b);
+	friend bool operator < (const BigInteger &a, int b);
+	friend bool operator > (const BigInteger &a, int b);
+	friend bool operator == (const BigInteger &a, const  BigInteger &b);
+	friend bool operator == (const BigInteger &a, int b);
+	friend bool operator <= (const BigInteger &a, const  BigInteger &b);
+	friend bool operator >= (const BigInteger &a, const  BigInteger &b);
+	friend bool operator >= (const BigInteger &a, int b);
+	friend bool operator <= (const BigInteger &a, int b);
 
 	friend BigInteger maxim(BigInteger a, BigInteger b);
 	friend BigInteger minim(BigInteger a, BigInteger b);
@@ -64,10 +64,11 @@ public:
 	BigInteger &operator /= (BigInteger &a, BigInteger b);
 	BigInteger &operator /= (BigInteger &a, int b);
 
-	friend BigInteger operator % (BigInteger a, BigInteger b);
-	friend int operator % (BigInteger a, int b);
-	BigInteger &operator %= (BigInteger &a, BigInteger b);
-	BigInteger &operator %= (BigInteger &a, int b);
+	friend BigInteger operator %(const BigInteger &a, const BigInteger &b)
+	friend BigInteger operator %(long long a) const;
+	friend BigInteger operator %(long long a, const BigInteger &A);
+	 BigInteger &operator %=(const BigInteger &A);
+     BigInteger &operator %=(long long a);
 
 private:
 	int n;

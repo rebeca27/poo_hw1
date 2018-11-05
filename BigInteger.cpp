@@ -5,6 +5,8 @@
 #include<stdexcept>
 #include<algorithm>
 #include<cstdlib>
+#include <sstream>
+#include <cmath>
 #include "BigInt.h"
 
 
@@ -166,9 +168,10 @@ BigInteger :: operator ++()
 	return count;
 }
 
-void BigInteger :: operator --()
+BigInteger :: operator --()
 {
 	count = count - 1;
+	return count;
 }
 
 
@@ -520,46 +523,103 @@ void BigInteger :: operator /= (BigInteger &a, int b) {
 }
 
 
-BigInteger BigInteger :: operator % (BigInteger a, BigInteger b)
+BigInteger BigInteger::operator%(const BigInteger &a, const BigInteger &b)
 {
-	Set(a);
-	Set(b);
-	if (b == Integer(0)) return Integer("-1");
-	BigInteger lol;
-	for (i = a.size() - 1; i >= 0; i--)
+	BigInteger q = a / b;
+	BigInteger x = q + b;
+	BigInteger result = a - b;
+	return result;
+}
+
+BigInteger BigInteger::operator%(long long a) const {
+	BigInteger A(a);
+	return *this - A * (*this / A);
+}
+
+BigInteger BigInteger::operator%(long long a, const BigInteger &A) {
+	BigInteger B(a);
+	return B - A * (B / A);
+}
+
+BigInteger BigInteger::operator%=(const BigInteger &A) {
+   *this = *this % A;
+    return *this;
+}
+
+BigInteger BigInteger::operator%=(long long a) {
+    BigInteger A(a);
+    *this = *this % A;
+    return *this;
+}
+
+
+
+/*
+
+// converteste long long in string
+string BigInteger::toString(long long n)
+{
+	stringstream ss;
+	string temp;
+
+	ss << n;
+	ss >> temp;
+
+	return temp;
+}
+
+// converteste string in long long
+long long BigInteger::toInt(string s)
+{
+	long long sum = 0;
+
+	for (int i = 0; i < s.length(); i++)
+		sum = (sum * 10) + (s[i] - '0');
+
+	return sum;
+}
+
+
+// inmulteste 2 stringuri si le aduna intr-un alt string 
+string BigInteger::multiply(string n1, string n2)
+{
+	if (n1.length() > n2.length())
+		n1.swap(n2);
+
+	string res = "0";
+	for (int i = n1.length() - 1; i >= 0; --i)
 	{
-		lol.insert(lol.begin(), a[i]);
-		int x = 0, L = 0, R = base;
-		while (L <= R) {
-			int mid = (L + R) >> 1;
-			if (b*Integer(mij) > lol) {
-				x = mid;
-				R = mid - 1;
+		string temp = n2;
+		int currentDigit = n1[i] - '0';
+		int carry = 0;
+
+		for (int j = temp.length() - 1; j >= 0; --j)
+		{
+			temp[j] = ((temp[j] - '0') * currentDigit) + carry;
+
+			if (temp[j] > 9)
+			{
+				carry = (temp[j] / 10);
+				temp[j] -= (carry * 10);
 			}
 			else
-				L = mid + 1;
+				carry = 0;
+
+			temp[j] += '0'; //inapoi la string
 		}
-		lol = lol - Integer(x - 1)*b;
+
+		if (carry > 0)
+			temp.insert(0, 1, (carry + '0'));
+
+		temp.append((n1.length() - i - 1), '0'); // inmulteste cu 10, 100, 1000, 10000 etc.
+
+		res = add(res, temp); // O(n)
 	}
-	Set(lol);
-	return lol;
+
+	while (res[0] == '0' && res.length() != 1) // sterge 0-urile ramase
+		res.erase(0, 1);
+
+	return res;
 }
 
-int BigInteger :: operator % (BigInteger a, int b)
-{
-	Set(a);
-	if (b == 0) return -1;
-	int gcc = 0;
-	for (i = a.size() - 1; i >= 0; i--)
-		gcc = (gcc * (base % b) + a[i] % b) % b;
-	return gcc;
-}
-
-void BigInteger :: operator %= (BigInteger &a, BigInteger b) {
-	a = a % b;
-}
-
-void BigInteger :: operator %= (BigInteger &a, int b) {
-	a = a % Integer(b);
-}
-ак вычитаемого на противоположный и обрабатывать как сложение
+*/
