@@ -88,6 +88,11 @@ BigInteger::BigInteger(const std::string& val, unsigned char base)
 	this->base = 10;
 }
 
+const string& BigInteger::getNumber() // intoarce numarul
+{
+	return number;
+}
+
 int BigInteger::getBase()
 {
 	return this->base;
@@ -115,6 +120,44 @@ BigInteger BigInteger::Integer(char a[])                  //returneaza forma str
 	for (i = 0; i <= strlen(a) - 1; i++)
 		r = r + a[i];
 	return r;
+}
+
+bool BigInteger::equals(BigInteger n1, BigInteger n2)
+{
+	return n1.getNumber() == n2.getNumber()
+		&& n1.getSign() == n2.getSign();
+}
+bool BigInteger::less(BigInteger n1, BigInteger n2)
+{
+	bool sign1 = n1.getSign();
+	bool sign2 = n2.getSign();
+
+	if (sign1 && !sign2) // daca n1 este -ve si n2 este +ve
+		return true;
+
+	else if (!sign1 && sign2)
+		return false;
+
+	else if (!sign1) // amebele +ve
+	{
+		if (n1.getNumber().length() < n2.getNumber().length())
+			return true;
+		if (n1.getNumber().length() > n2.getNumber().length())
+			return false;
+		return n1.getNumber() < n2.getNumber();
+	}
+	else // ambele -ve
+	{
+		if (n1.getNumber().length() > n2.getNumber().length())
+			return true;
+		if (n1.getNumber().length() < n2.getNumber().length())
+			return false;
+		return n1.getNumber().compare(n2.getNumber()) > 0; 
+	}
+}
+bool BigInteger::greater(BigInteger n1, BigInteger n2)
+{
+	return !equals(n1, n2) && !less(n1, n2);
 }
 
 BigInteger::BigInteger(long long a) {
@@ -491,8 +534,6 @@ BigInteger BigInteger::operator%=(long long a) {
     return *this;
 }
 
-/*
-
 // converteste long long in string
 string BigInteger::toString(long long n)
 {
@@ -559,4 +600,3 @@ string BigInteger::multiply(string n1, string n2)
 	return res;
 }
 
-*/

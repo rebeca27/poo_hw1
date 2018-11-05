@@ -12,6 +12,7 @@ public:
 	BigInteger(long long int val, unsigned char base = '10');
 	virtual ~BigInteger();			//functia virtuala asigură că se apeleaza corect funcția pentru un obiect
 	int getBase();
+	const string& getNumber(); // intoarce numarul
 	char getSign();
 	void setSign(bool s);
 	char* toString();
@@ -82,4 +83,12 @@ private:
 	bool is_unsigned;
 	char sign;
 	std::vector<unsigned char> val;
+
+	//functii suplimentare cerintelor de la seminar dar necesare pentru cod
+	bool equals(BigInteger n1, BigInteger n2);
+	bool less(BigInteger n1, BigInteger n2);
+	bool greater(BigInteger n1, BigInteger n2);
+	//functii suplimentare cerintelor de la seminar dar necesare pentru folosirea vectorului std::vector<unsigned char> cu integer
+	string toString(long long n);
+	long long toInt(string s);
 }
