@@ -1,6 +1,5 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "BigInteger.h"
-
 
 BigInteger::BigInteger()
 {
