@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
-#include "BigInteger.h"
+#include "BigInt.h"
+
 
 BigInteger::BigInteger(int val = 0, unsigned char base = '10')
 {
@@ -7,19 +8,20 @@ BigInteger::BigInteger(int val = 0, unsigned char base = '10')
 	this->base = base;
 }
 
-BigInteger::BigInteger(long long int val , unsigned char base = '10')
+BigInteger::BigInteger(long long int val, unsigned char base = '10')
 {
 	this->val = (long long int)val;
 	this->base = 10;
 }
 
-BigInteger::BigInteger(const std::string& val,unsigned char base = '10')
+BigInteger::BigInteger(const std::string& val, unsigned char base = '10')
 {
 
 	for (int i = 0; i < val.length; i++) {
 		if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
 			this->val[i] = val[i];
-		} else {
+		}
+		else {
 			throw std::runtime_error("valoarea introdusa nu este un numar valid");
 		}
 	}
@@ -49,10 +51,10 @@ char* BigInteger::toString()
 	return this->numberSequence;
 }
 
-BigInteger BigInteger :: Integer(char a[])                  //returneaza forma string a unui numar
+BigInteger BigInteger::Integer(char a[])                  //returneaza forma string a unui numar
 {
 	string r = "";
-	for(i = 0; i <= strlen(a) - 1; i++) 
+	for (i = 0; i <= strlen(a) - 1; i++)
 		r = r + a[i];
 	return r;
 }
@@ -60,9 +62,9 @@ BigInteger BigInteger :: Integer(char a[])                  //returneaza forma s
 BigInteger::BigInteger(long long a) {
 	int n = 0;
 	for (int i = 0; i < 250; i++) m[i] = 0;
-	if (a >= 0) signplus = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
-	else {	
-		signplus = false;					//negativ altfel
+	if (a >= 0) sign_plus = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
+	else {
+		sign_plus = false;					//negativ altfel
 		a *= (-1);							//dacă numarul este negativ, se obtine inversul lui și se continua să se citeasca numărul
 	}
 	while (a != 0) {						// se scrie numărul în matrice
@@ -72,15 +74,55 @@ BigInteger::BigInteger(long long a) {
 	}
 }
 
-void BigInteger :: operator ++() 
-    { 
-        count = count+1; 
-    }
+// constructor din șir
+BigInteger::BigInteger(const char *st) {
+	n = 0;
+	for (int i = 0; i < 250; i++) m[i] = 0;
+	int l = strlen(st);								// lungimea șirului de citire
+	char str[250];
+	for (int i = 0; i < l; i++) str[i] = st[i];     // se copiaza sirul pe o linie noua
 
-void BigInteger :: operator --() 
-    { 
-        count = count-1; 
-    }
+	if (str[0] == '-' || str[0] == '+') {         //Если указан знак числа, то установить его и удалить из строки
+		if (str[0] == '-') sign_plus = false;
+		else sign_plus = true;
+		for (int i = 1; i < l; i++) {
+			str[i - 1] = str[i];
+		}
+		l--;
+	}
+	else signplus = true;//Если знак не указан - число положительное
+	int u = 0; //Количество нулей вначала считанной строки
+	for (int i = 0; i < l; i++) {//Подсчет количества нулей
+		if (str[i] == '0') u++;
+		else break;
+	}
+	if (u == l) {//Если в строке одни нули, записать как число 0
+		signplus = true;
+		m[0] = 0;
+		n = 1;
+	}
+	else {//Если нули только вначале числа - удалить их
+		for (int i = u; i < l; i++) {
+			str[i - u] = str[i];//Смещение строки
+		}
+		l -= u;//Установка длины
+		while (l) {//Запись числа в массив
+			m[n] = str[l - 1] - '0';
+			n++;
+			l--;
+		}
+	}
+}
+
+void BigInteger :: operator ++()
+{
+	count = count + 1;
+}
+
+void BigInteger :: operator --()
+{
+	count = count - 1;
+}
 
 
 istream& operator >> (istream &in, BigInteger &A) {
@@ -122,7 +164,7 @@ bool BigInteger :: operator < (BigInteger x, BigInteger y)
 	return false;
 }
 
-bool BigInteger :: operator > (BigInteger a, BigInteger b) 
+bool BigInteger :: operator > (BigInteger a, BigInteger b)
 {
 	return (b < a);
 }
@@ -132,7 +174,7 @@ bool BigInteger :: operator == (BigInteger a, BigInteger b)
 	return (!(a < b) && !(b < a));
 }
 
-bool BigInteger :: operator <= (BigInteger a, BigInteger b) 
+bool BigInteger :: operator <= (BigInteger a, BigInteger b)
 {
 	return (a < b || a == b);
 }
@@ -142,12 +184,12 @@ bool BigInteger :: operator >= (BigInteger a, BigInteger b)
 	return (b < a || b == a);
 }
 
-bool BigInteger :: operator < (BigInteger a, int b) 
+bool BigInteger :: operator < (BigInteger a, int b)
 {
 	return (a < Integer(b));
 }
 
-bool BigInteger :: operator > (BigInteger a, int b) 
+bool BigInteger :: operator > (BigInteger a, int b)
 {
 	return (a > Integer(b));
 }
@@ -173,7 +215,7 @@ BigInteger maxim(BigInteger a, BigInteger b)
 	return b;
 }
 
-BigInteger BigInteger :: minim(BigInteger a, BigInteger b) 
+BigInteger BigInteger::minim(BigInteger a, BigInteger b)
 {
 	if (a < b) return a;
 	return b;
@@ -186,14 +228,14 @@ BigInteger BigInteger :: operator + (BigInteger a, BigInteger b)
 	BigInt lol;
 	int rest = 0;
 	int j = max(a.size(), b.size());
- 	for(int i = 0; i <= j - 1; i++) 
+	for (int i = 0; i <= j - 1; i++)
 	{
 		if (i < a.size()) rest += a[i];
 		if (i < b.size()) rest += b[i];
 		lol.push_back(rest%base);
 		rest /= base;
 	}
-	if (rest) 
+	if (rest)
 		bas.push_back(rmd);
 	Set(lol);
 	return lol;
@@ -204,8 +246,8 @@ BigInteger BigInteger :: operator + (BigInteger a, int b)
 	return a + Integer(b);
 }
 
-BigInteger BigInteger :: operator ++ (BigInteger &a) 
-{ 
+BigInteger BigInteger :: operator ++ (BigInteger &a)
+{
 	a = a + 1;
 	return a;
 }
@@ -215,7 +257,7 @@ void BigInteger :: operator += (BigInteger &a, BigInteger b)
 	a = a + b;
 }
 
-void BigInteger :: operator += (BigInteger &a, int b) 
+void BigInteger :: operator += (BigInteger &a, int b)
 {
 	a = a + b;
 }
@@ -225,8 +267,8 @@ BigInteger BigInteger :: operator - (BigInteger a, BigInteger b) 	//rmd=remainde
 	Set(a);
 	Set(b);
 	BigInteger lol;
-	int rmd = 0; 
-	for(i = 0; i <= a.size() - 1; i++)
+	int rmd = 0;
+	for (i = 0; i <= a.size() - 1; i++)
 	{
 		rmd += a[i] - (i < b.size() ? b[i] : 0);
 		if (rmd < 0)
@@ -242,17 +284,17 @@ BigInteger BigInteger :: operator - (BigInteger a, int b)
 	return a - Integer(b);
 }
 
-void BigInteger :: operator -- (BigInteger &a) 
-{ 
+void BigInteger :: operator -- (BigInteger &a)
+{
 	a = a - 1;
 }
 
-void BigInteger :: operator -= (BigInteger &a, BigInteger b) 
+void BigInteger :: operator -= (BigInteger &a, BigInteger b)
 {
 	a = a + b;
 }
 
-void BigInteger :: operator -= (BigInteger &a, int b) 
+void BigInteger :: operator -= (BigInteger &a, int b)
 {
 	a = a - b;
 }
@@ -283,18 +325,18 @@ BigInteger BigInteger :: operator * (BigInteger a, int b)
 	return a * Integer(b);
 }
 
-void BigInteger :: operator *= (BigInteger &a, BigInt b) 
+void BigInteger :: operator *= (BigInteger &a, BigInt b)
 {
 	a = a * b;
 }
 
-void BigInteger :: operator *= (BigInteger &a, int b) 
+void BigInteger :: operator *= (BigInteger &a, int b)
 {
 	a = a * b;
 }
 
 
-BigInteger BigInteger :: operator / (BigInteger a, BigInteger b) 
+BigInteger BigInteger :: operator / (BigInteger a, BigInteger b)
 {
 	Set(a);
 	Set(b);
@@ -303,7 +345,7 @@ BigInteger BigInteger :: operator / (BigInteger a, BigInteger b)
 
 	for (int i = a.size() - 1; i >= 0; i--)
 	{
-		cur.insert (cur.begin(), a[i]);
+		cur.insert(cur.begin(), a[i]);
 		int x = 0, L = 0, R = base;
 		while (L <= R) {
 			int mid = (L + R) >> 1;
@@ -315,19 +357,19 @@ BigInteger BigInteger :: operator / (BigInteger a, BigInteger b)
 			else
 				L = mid + 1;
 		}
-		ent = ent - Integer (x - 1) * b;
-		ans.insert (ans.begin(), x - 1);
+		ent = ent - Integer(x - 1) * b;
+		ans.insert(ans.begin(), x - 1);
 	}
 	Set(lol);
 	return lol;
 }
 
-BigInteger BigInteger :: operator / (BigInteger t, int b) 
+BigInteger BigInteger :: operator / (BigInteger t, int b)
 {
 	Set(t);
 	BigInteger lol;
 	t ent = 0ll;
-	for(i = t.size() - 1; i >= 0; i--)
+	for (i = t.size() - 1; i >= 0; i--)
 	{
 		ent = (ent*(a)base + (a)t[i]);
 		lol.insert(lol.begin(), ent / b);
@@ -352,7 +394,7 @@ BigInteger BigInteger :: operator % (BigInteger a, BigInteger b)
 	Set(b);
 	if (b == Integer(0)) return Integer("-1");
 	BigInteger lol;
-	for(i = a.size() - 1; i >= 0; i--)
+	for (i = a.size() - 1; i >= 0; i--)
 	{
 		lol.insert(lol.begin(), a[i]);
 		int x = 0, L = 0, R = base;
@@ -377,7 +419,7 @@ int BigInteger :: operator % (BigInteger a, int b)
 	if (b == 0) return -1;
 	int gcc = 0;
 	for (i = a.size() - 1; i >= 0; i--)
-		gcc = (gcc * (base % b ) + a[i] % b ) % b;
+		gcc = (gcc * (base % b) + a[i] % b) % b;
 	return gcc;
 }
 

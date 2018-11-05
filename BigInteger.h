@@ -1,4 +1,5 @@
-#Rebeca_Oprea_grupa_252
+
+//Rebeca_Oprea_grupa_252
 #include <vector>
 
 
@@ -6,14 +7,15 @@ class BigInteger
 {
 public:
 	BigInteger();
-	BigInteger(const char* numberSequence);
-	BigInteger(const char* numberSequence, int base);
-	virtual ~BigInteger();		//functia virtuala asigură că se apeleaza corect funcția pentru un obiect
+	BigInteger(int val, unsigned char base);
+	BigInteger(long long int val, unsigned char base);
+	BigInteger(const std::string& val, unsigned char base);
+	virtual ~BigInteger();			//functia virtuala asigură că se apeleaza corect funcția pentru un obiect
 	int getBase();
 	char getSign();
 	char* toString();
 
-	friend ostream& operator<<(ostream &out, const BigInteger &A);
+	friend ostream& operator << (ostream &out, const BigInteger &A);
 	friend istream& operator >> (istream &in, BigInteger &A);
 
 	friend int compare(const BigInteger &A, const BigInteger &B);
@@ -67,7 +69,7 @@ public:
 	BigInteger &operator %= (BigInteger &a, int b);
 
 private:
-	char* numberSequence;
+	int val;
 	int base;
 	bool isUnsigned;
 	std::vector<unsigned char> val;
