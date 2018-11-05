@@ -42,7 +42,7 @@ char* BigInteger::toString()
 	return this->numberSequence;
 }
 
-const int baza = 10;
+const int base = 10;
 
 BigInteger BigInteger :: Integer(char a[])                  //returneaza forma string a unui numar
 {
