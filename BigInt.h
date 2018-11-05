@@ -25,7 +25,7 @@ public:
 
 const int baza = 1e9;  //Format: 1,000,000,000.00
 
-BigInteger Integer(char a[])
+BigInteger Integer(char a[])                  //returneaza forma de integer
 {
 	string r = "";
 	for(i = 0; i <= strlen(a) - 1; i++) 
@@ -33,7 +33,9 @@ BigInteger Integer(char a[])
 	return r;
 }
 
-void Set(BigInteger &bi) 
+void Set(BigInteger &bi)             //se repeta structura while de cate ori vectorul are mai mult de 1 elem,
+				     //dar referinta ultimului element din vector este primul	
+	
 {
 	while (bi.size() > 1 && bi.back() == 0) bi.pop_back();
 }
