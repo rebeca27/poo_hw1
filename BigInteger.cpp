@@ -2,8 +2,31 @@
 #include "BigInt.h"
 
 
-BigInteger::BigInteger(int val = 0, unsigned char base = '10')
+BigInteger:: BigInteger(int val = 0, unsigned char base = '10')
 {
+	int digit;
+	bool isNegative = false;
+	if (val < 0)
+	{
+		isNegative = true;
+		val = val * (-1);
+	}
+
+	if (val == 0)
+		digit.push_back(0);
+
+	while (val != 0)
+	{
+		digit = val % 10;
+		digit.push_back(digit);
+		val = val / 10;
+	}
+
+
+	if (isNegative == true)
+		sign = '-';
+	else
+		sign = '+';
 	this->val = val;
 	this->base = base;
 }
@@ -16,17 +39,17 @@ BigInteger::BigInteger(long long int val, unsigned char base = '10')
 
 BigInteger::BigInteger(const std::string& val, unsigned char base = '10')
 {
-	if (val[0] == '-') sign_minus = '-';
-	else if (val[0] == '+')  sign_plus = '+';
+	if (val[0] == '-') sign = '-';
+	else if (val[0] == '+')  sign = '+';
 	else
-		for (int i = 1; i < val.length; i++) {
-			if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
-				this->val[i] = val[i];
-			}
-			else {
-				throw std::runtime_error("valoarea introdusa nu este un numar valid");
-			}
+	for (int i = 1; i < val.length; i++) {
+		if (val[i] >= (int) '0' && val[i] <= (int) '9' || val[i] == '+' || val[i] == '-') {
+			this->val[i] = val[i];
 		}
+		else {
+			throw std::runtime_error("valoarea introdusa nu este un numar valid");
+		}
+	}
 
 	for (int i = val.length() - 1; i >= 1; i--)
 	{
@@ -66,13 +89,13 @@ BigInteger BigInteger::Integer(char a[])                  //returneaza forma str
 BigInteger::BigInteger(long long a) {
 	int n = 0;
 	for (int i = 0; i < 250; i++) m[i] = 0;
-	if (a >= 0) sign_plus = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
+	if (a >= 0) sign = true;		//se seteaza numarul ca fiind pozitiv daca este mai mare sau egal cu 0 sau
 	else {
-		sign_plus = false;					//negativ altfel
+		sign = false;					//negativ altfel
 		a *= (-1);							//dacă numarul este negativ, se obtine inversul lui și se continua să se citeasca numărul
 	}
 	while (a != 0) {						// se scrie numărul în matrice
-		m[n] = a % 10;
+		val[n] = a % 10;
 		a /= 10;
 		n++;
 	}
@@ -81,46 +104,47 @@ BigInteger::BigInteger(long long a) {
 // constructor din șir
 BigInteger::BigInteger(const char *st) {
 	n = 0;
-	for (int i = 0; i < 250; i++) m[i] = 0;
+	for (int i = 0; i < 250; i++) val[i] = 0;
 	int l = strlen(st);								// lungimea șirului de citire
 	char str[250];
 	for (int i = 0; i < l; i++) str[i] = st[i];     // se copiaza sirul pe o linie noua
 
 	if (str[0] == '-' || str[0] == '+') {         //daca se gaseste semn la inceput atunci daca e negativ  
-		if (str[0] == '-') sign_plus = false;		//variabila semnului pozitiv va primi valoarea negativa
-		else sign_plus = true;				//altfel daca e pozitiv variabila semnului pozitiv va primi valoarea pozitiva
+		if (str[0] == '-') sign = false;		//variabila semnului pozitiv va primi valoarea negativa
+		else sign = true;				//altfel daca e pozitiv variabila semnului pozitiv va primi valoarea pozitiva
 		for (int i = 1; i < l; i++) {
 			str[i - 1] = str[i];
 		}
 		l--;
 	}
-	else signplus = true;//Если знак не указан - число положительное
-	int u = 0; //Количество нулей вначала считанной строки
-	for (int i = 0; i < l; i++) {//Подсчет количества нулей
+	else sign = true;					// dacă semnul nu este specificat, numărul este pozitiv
+	int u = 0;								 // numărul de zerouri de la începutul șirului de citire
+	for (int i = 0; i < l; i++) {			// se numara numărul de zerouri
 		if (str[i] == '0') u++;
 		else break;
 	}
-	if (u == l) {//Если в строке одни нули, записать как число 0
-		signplus = true;
-		m[0] = 0;
+	if (u == l) {							// dacă linia are numai zerouri, se scrie numărul 0
+		sign = true;
+		val[0] = 0;
 		n = 1;
 	}
-	else {//Если нули только вначале числа - удалить их
+	else {									// dacă zerourile sunt doar la începutul numărului se sterg
 		for (int i = u; i < l; i++) {
-			str[i - u] = str[i];//Смещение строки
+			str[i - u] = str[i];		
 		}
-		l -= u;//Установка длины
-		while (l) {//Запись числа в массив
-			m[n] = str[l - 1] - '0';
+		l -= u;			// se seteaza lungimea
+		while (l) {	// se scrie numărul în matrice
+			val[n] = str[l - 1] - '0';
 			n++;
 			l--;
 		}
 	}
 }
 
-void BigInteger :: operator ++()
+ BigInteger :: operator ++()
 {
 	count = count + 1;
+	return count;
 }
 
 void BigInteger :: operator --()
@@ -130,8 +154,8 @@ void BigInteger :: operator --()
 
 
 istream& operator >> (istream &in, BigInteger &A) {
-	char str[250];										// String pentru a scrie caracterele
-	stream >> str;										// Citiți caracterele
+	char str[250];										// string pentru a scrie caracterele
+	stream >> str;										// citiți caracterele
 	BigInteger B(str);
 	A = B;
 	return stream;
@@ -139,13 +163,13 @@ istream& operator >> (istream &in, BigInteger &A) {
 
 ostream& operator << (ostream &out, const BigInteger &A)
 {
-	if (!A.signplus) out << '-';							//Afisati semnul dacă numărul este negativ
+	if (!A.signplus) out << '-';							//afisati semnul dacă numărul este negativ
 	for (int i = A.n - 1; i >= 0; i--) out << A.m[i];
 	return out;
 }
 
 int compare(const BigInteger &A, const BigInteger &B) {
-	if (A.n > B.n) return 1;//Сравнение длины чисел, если они различны - сразу вернуть большее число
+	if (A.n > B.n) return 1;			// comparând lungimea numerelor, dacă sunt diferite se returnează numarul mai mare
 	else if (A.n < B.n) return 2;
 	else {
 		for (int i = A.n - 1; i > -1; i--) { //Сравнение чисел от старшего разряда

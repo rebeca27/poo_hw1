@@ -1,7 +1,8 @@
 
 //Rebeca_Oprea_grupa_252
 #include <vector>
-
+#include <cstring>
+#include <algorithm>
 
 class BigInteger
 {
@@ -70,6 +71,7 @@ public:
 
 private:
 	int val;
+	int n;
 	int base;
 	bool is_unsigned;
 	bool sign_plus;
